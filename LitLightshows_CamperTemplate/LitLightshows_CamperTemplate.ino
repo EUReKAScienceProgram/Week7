@@ -18,7 +18,6 @@ void setup() {
   pinMode(greenPin, OUTPUT);
   pinMode(redPin, OUTPUT);
   pinMode(yellowPin, OUTPUT);
-  pinMode(RGBRedPin, OUTPUT);
   pinMode(RGBGreenPin, OUTPUT);
   pinMode(RGBBluePin, OUTPUT);
 }
@@ -26,7 +25,55 @@ void setup() {
 void loop() {
   // THIS IS WHERE WE WILL PUT OUR CODE
 
+  
+  delay(1000);
+  
+  switchColour("Blue");
+  switchColour("Green");
+  switchColour("Red");
+  switchColour("Yellow");
 
+   delay(1000);
+   switchColour("Yellow");
+   delay(1000);
+   switchColour("Red");
+   delay(1000);
+   switchColour("Green");
+   delay(1000);
+   switchColour("Blue");
+   delay(1000);
+
+   delay(1000);
+   switchColour("Blue");
+   delay(1000);
+   switchColour("Green");
+   delay(1000);
+   switchColour("Red");
+   delay(1000);
+   switchColour("Yellow");
+   delay(1000);
+
+   delay(1000);
+   switchColour("Blue");
+   delay(1000);
+   switchColour("Green");
+   delay(1000);
+   switchColour("Red");
+   delay(1000);
+   switchColour("Yellow");
+   delay(1000);
+
+   delay(1000);
+   switchColour("Yellow");
+   delay(1000);
+   switchColour("Red");
+   delay(1000);
+   switchColour("Green");
+   delay(1000);
+   switchColour("Blue");
+   delay(1000);
+ 
+   
 }
 
 /**
