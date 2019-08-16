@@ -26,6 +26,7 @@ void setup() {
 void loop() {
   // THIS IS WHERE WE WILL PUT OUR CODE
 
+<<<<<<< HEAD
 switchColour ("Blue");
 switchColour ("Green");
 switchColour ("Red");
@@ -52,6 +53,18 @@ delay(100);
 
 }
 
+=======
+  switchColour("Blue");
+  switchColour("Green");
+  switchColour("Red");
+  switchColour("Yellow");
+delay(1000);
+ switchColour("Blue");
+  switchColour("Green");
+  switchColour("Red");
+  switchColour("Yellow");
+delay(1000);
+>>>>>>> d92a4637d553c283c4d706d0f74e588cbb686158
 /**
  * Can use the function below to set the colour of the RGB Led.
  * call the function and give it 3 values between 0 and 255.
@@ -63,8 +76,6 @@ void setRGBColour(int red, int green, int blue){
   analogWrite(RGBRedPin, red);
   analogWrite(RGBGreenPin, green);
   analogWrite(RGBBluePin, blue);
-  
-}
 
 /**
  * Can use this function to switch the state of any of the 4 coloured LEDs
