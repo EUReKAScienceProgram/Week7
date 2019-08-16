@@ -18,18 +18,22 @@ void setup() {
   pinMode(greenPin, OUTPUT);
   pinMode(redPin, OUTPUT);
   pinMode(yellowPin, OUTPUT);
-  pinMode(RGBRedPin, OUTPUT);
   pinMode(RGBGreenPin, OUTPUT);
   pinMode(RGBBluePin, OUTPUT);
 }
 
 void loop() {
   // THIS IS WHERE WE WILL PUT OUR CODE
+<<<<<<< HEAD
   
   switchColour("Blue");
+  delay(100);
   switchColour("Green");
+  delay(100);
   switchColour("Red");
+  delay(100);
   switchColour("Yellow");
+  delay(100);
   setRGBColour(255, 25, 255);
   
   delay(1000);
@@ -43,10 +47,180 @@ void loop() {
   switchColour("Yellow");
 
   delay (1000);
+=======
+<<<<<<< HEAD
+switchColour ("Blue") ;
+setRGBColour (0, 0, 255) ;
+=======
+    switchColour ("Blue");
+  switchColour ("Green");
+  switchColour ("Red");
+  switchColour ("Yellow");
+  setRGBColour (0,81,255);
+>>>>>>> 1b8cd39750f2c96a1d92ecd611aacb38a52618c6
 
+<<<<<<
+  
+  delay(1000);
+  
+=======
+>>>>>>> d92a4637d553c283c4d706d0f74e588cbb686158
+=======
+  delay(500);
+  switchColour ("Yellow");
+
+  delay(600);
+  switchColour ("Blue");
+  switchColour ("Yellow");
+
+  delay(700);
+   switchColour ("Green");
+   switchColour ("Blue");
+   delay(800);
+    switchColour ("Red");
+    switchColour ("Green");
+    delay(900);
+    switchColour ("Red");
+
+    delay(1000);
+    setRGBColour (0,81,255);
+
+    delay(1100);
+
+    
+
+   
+  
+
+   
+  
+>>>>>>>
+
+delay(200) ;
+
+switchColour ("Blue") ;
+switchColour ("Green") ;
+setRGBColour (0, 255, 0) ;
+
+delay(200) ;
+
+switchColour ("Green") ;
+switchColour ("Red") ;
+setRGBColour (255, 0, 0) ;
+
+delay(200) ;
+
+switchColour ("Red") ;
+switchColour ("Yellow") ;
+setRGBColour (255, 150, 0) ;
+
+delay(200) ;
+
+switchColour ("Yellow") ;
+switchColour ("Red") ;
+setRGBColour (255, 0, 0) ;
+
+delay(200) ;
+
+switchColour ("Red") ;
+switchColour ("Green") ;
+setRGBColour (0, 255, 0) ;
+
+delay(200) ;
+
+switchColour ("Green") ;
+setRGBColour (0, 0, 0) ;
+
+delay(200) ;
+
+
+
+
+switchColour ("Blue");
+switchColour ("Green");
+switchColour ("Red");
+switchColour ("Yellow");
+
+delay(1000);
+switchColour ("Blue");
+switchColour ("Green");
+switchColour ("Red");
+switchColour ("Yellow");
+setRGBColour(255, 255, 255);
+delay(100);
+switchColour ("Blue");
+delay(100);
+switchColour ("Green");
+delay(100);
+switchColour ("Red");
+delay(100);
+switchColour ("Yellow");
+delay(100);
+switchColour ("Red");
+switchColour ("Yellow");
+delay(100);
 
 }
 
+=======
+>>>>>>> 1deb56bbd97d9c9d52c2ec82321586eb6dd64593
+  switchColour("Blue");
+  switchColour("Green");
+  switchColour("Red");
+  switchColour("Yellow");
+<<<<<<< HEAD
+
+   delay(1000);
+   switchColour("Yellow");
+   delay(1000);
+   switchColour("Red");
+   delay(1000);
+   switchColour("Green");
+   delay(1000);
+   switchColour("Blue");
+   delay(1000);
+
+   delay(1000);
+   switchColour("Blue");
+   delay(1000);
+   switchColour("Green");
+   delay(1000);
+   switchColour("Red");
+   delay(1000);
+   switchColour("Yellow");
+   delay(1000);
+
+   delay(1000);
+   switchColour("Blue");
+   delay(1000);
+   switchColour("Green");
+   delay(1000);
+   switchColour("Red");
+   delay(1000);
+   switchColour("Yellow");
+   delay(1000);
+
+   delay(1000);
+   switchColour("Yellow");
+   delay(1000);
+   switchColour("Red");
+   delay(1000);
+   switchColour("Green");
+   delay(1000);
+   switchColour("Blue");
+   delay(1000);
+ 
+   
+}
+
+=======
+delay(1000);
+ switchColour("Blue");
+  switchColour("Green");
+  switchColour("Red");
+  switchColour("Yellow");
+delay(1000);
+>>>>>>> d92a4637d553c283c4d706d0f74e588cbb686158
 /**
  * Can use the function below to set the colour of the RGB Led.
  * call the function and give it 3 values between 0 and 255.
@@ -58,8 +232,6 @@ void setRGBColour(int red, int green, int blue){
   analogWrite(RGBRedPin, red);
   analogWrite(RGBGreenPin, green);
   analogWrite(RGBBluePin, blue);
-  
-}
 
 /**
  * Can use this function to switch the state of any of the 4 coloured LEDs
