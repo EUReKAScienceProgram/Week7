@@ -1,3 +1,4 @@
+
 int bluePin = 12;
 int greenPin = 11;
 int redPin = 10;
@@ -25,8 +26,27 @@ void setup() {
 
 void loop() {
   // THIS IS WHERE WE WILL PUT OUR CODE
+  
+switchColour ("Blue") ;
+delay(100) ;
+  switchColour ("Green");
+  delay(100) ;
+  switchColour ("Red") ;
+  delay(100) ;
+  switchColour ("Yellow") ;
+setRGBColour (100, 100, 100);
+delay(100) ;
 
+  switchColour ("Blue") ;
+delay(100) ;
+  switchColour ("Green");
+  delay(100) ;
+  switchColour ("Red") ;
+  delay(100) ;
+  switchColour ("Yellow") ;
 
+  delay(100) ;
+  
 }
 
 /**
