@@ -25,120 +25,45 @@ void setup() {
 
 void loop() {
   // THIS IS WHERE WE WILL PUT OUR CODE
-<<<<<<< HEAD
-<<<<<<< HEAD
-switchColour("Blue");
-switchColour("Green");
-switchColour("Red");
-switchColour("Yellow");
-setRGBColour(100, 0, 100);
-=======
-    switchColour ("Blue");
-  switchColour ("Green");
-  switchColour ("Red");
-  switchColour ("Yellow");
-  setRGBColour (0,81,255);
->>>>>>> 1deb56bbd97d9c9d52c2ec82321586eb6dd64593
+switchColour ("Blue") ;
+setRGBColour (0, 0, 255) ;
 
-  delay(500);
-  switchColour ("Yellow");
+delay(200) ;
 
-  delay(600);
-  switchColour ("Blue");
-  switchColour ("Yellow");
+switchColour ("Blue") ;
+switchColour ("Green") ;
+setRGBColour (0, 255, 0) ;
 
-  delay(700);
-   switchColour ("Green");
-   switchColour ("Blue");
-   delay(800);
-    switchColour ("Red");
-    switchColour ("Green");
-    delay(900);
-    switchColour ("Red");
+delay(200) ;
 
-    delay(1000);
-    setRGBColour (0,81,255);
+switchColour ("Green") ;
+switchColour ("Red") ;
+setRGBColour (255, 0, 0) ;
 
-    delay(1100);
+delay(200) ;
 
-    
+switchColour ("Red") ;
+switchColour ("Yellow") ;
+setRGBColour (255, 150, 0) ;
 
-   
-  
+delay(200) ;
 
-   
-  
+switchColour ("Yellow") ;
+switchColour ("Red") ;
+setRGBColour (255, 0, 0) ;
 
+delay(200) ;
 
+switchColour ("Red") ;
+switchColour ("Green") ;
+setRGBColour (0, 255, 0) ;
 
+delay(200) ;
 
-<<<<<<< HEAD
-switchColour ("Blue");
-switchColour ("Green");
-switchColour ("Red");
-switchColour ("Yellow");
+switchColour ("Green") ;
+setRGBColour (0, 0, 0) ;
 
-delay(1000);
-switchColour ("Blue");
-switchColour ("Green");
-switchColour ("Red");
-switchColour ("Yellow");
-setRGBColour(255, 255, 255);
-delay(100);
-switchColour ("Blue");
-delay(100);
-switchColour ("Green");
-delay(100);
-switchColour ("Red");
-delay(100);
-switchColour ("Yellow");
-delay(100);
-switchColour ("Red");
-switchColour ("Yellow");
-delay(100);
-
-delay(500);
-
-switchColour("Blue");
-
-delay(400);
-
-switchColour("Green");
-
-delay(300);
-
-switchColour("Red");
-
-delay(200);
-
-switchColour("Yellow");
-
-delay(100);
-
-}
-
-=======
-=======
-  
->>>>>>> 1c5dd85a00d7fd044b5c75588483b0f4aded1d7a
-  switchColour("Blue");
-  switchColour("Green");
-  switchColour("Red");
-  switchColour("Yellow");
-  setRGBColour(255, 25, 255);
-  
-  delay(1000);
-
-  switchColour("Blue");
-  delay(100);
-  switchColour("Green");
-   delay(100);
-  switchColour("Red");
-  delay(100);
-  switchColour("Yellow");
-
-  delay (1000);
-
+delay(200) ;
 
 }
 
