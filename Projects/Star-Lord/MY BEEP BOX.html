@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<!-- saved from url=(0384)https://www.beepbox.co/#7n31s0k0l00e06t22m0a7g0fj7i0r0o3210T0v4u00q0d0f8y0z1C2w0c0h0T1v5u92q1d4f7y2z1C0c2AbF6B6V9Q0490Pb976E0001T0v0u11q0d0f8y0z1C2w1c0h0T2v4u02q0d1f6y0z1C0w4b4h4h4x4h4h4h4h4h4h4h4h4y4N4h4h4h4zgigh4h4h4p22yFJv9p6CBjuz-wFLh-g5dvHgtk7hj9SqqqqqraWsFoCvyyzcFGAqgkPA3S3QzQzQzQzQzQzQzQzQzQzU0uIuAuAuAuAuAuAuAuAuAuAvkfqfifofifkfifkfifkfifkfpDbAv97O97OhYyhYAv8Av97O97OhYyhYAs0 -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>BeepBox</title>
+	<meta name="description" content="BeepBox is an online tool for sketching and sharing chiptune melodies.">
+	<meta name="keywords" content="chiptune, music, melody, composition, tool, square wave, NES, NSF, BeepBox, beepbox">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link href="./MY BEEP BOX_files/css" rel="stylesheet" media="all" onload="if (this.media != &#39;all&#39;) this.media=&#39;all&#39;;"> <!-- this is a trick to load CSS asynchronously. -->
+	<!-- <link rel="manifest" href="/manifest.webmanifest" /> -->
+	<style type="text/css">
+		body {
+			margin: auto;
+			background: #000;
+			font-family: 'Roboto', sans-serif;
+			font-size: large;
+			line-height: 1.3;
+			color: #fff;
+		}
+		h1 {
+			font-size: 30px;
+			text-align: center;
+		}
+		.centerDiv {
+			margin: 0px auto;
+		}
+		a {
+			color: #98f;
+		}
+		.donation form {
+			display: inline;
+		}
+		.donation input[type="submit"] {
+			-webkit-appearance: none;
+			appearance: none;
+			background: none;
+			border: none;
+			font-family: inherit;
+			font-size: inherit;
+			color: #98f;
+			text-decoration: none;
+			cursor: pointer;
+			padding: 0;
+			margin: 0;
+		}
+		#beepboxEditorContainer {
+			min-height: 645px;
+		}
+		
+		/* wide screen */
+		@media (min-width: 701px) {
+			body {
+				width: 700px;
+			}
+			.column-container {
+				display: flex;
+				justify-content: space-between;
+			}
+			.instructions-column {
+				width: 375px;
+			}
+			.twitter-column {
+				width: 300px;
+			}
+		}
+		
+		/* narrow screen */
+		@media (max-width: 700px) {
+			body {
+				width: 100vw;
+			}
+			p, .donation {
+				margin: 1em 0.5em;
+			}
+			.column-container {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+		}
+	</style>
+<script type="text/javascript" src="./MY BEEP BOX_files/beepbox_editor.min.js.download"></script><script charset="utf-8" src="./MY BEEP BOX_files/moment_timeline_tweet.fcad8ea2acff297a366cdbcbb2a39c03.js.download"></script><script charset="utf-8" src="./MY BEEP BOX_files/timeline.49693ebcd57b08708ebca7502c7c343d.js.download"></script><style type="text/css">
+
+.beepboxEditor {
+	display: flex;
+	position: relative;
+	touch-action: manipulation;
+	cursor: default;
+	font-size: small;
+	overflow: hidden;
+}
+
+.beepboxEditor .noSelection {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.beepboxEditor div {
+	margin: 0;
+	padding: 0;
+}
+
+.beepboxEditor .tip {
+	cursor: help;
+}
+
+.beepboxEditor .tip:hover {
+	color: #98f;
+	text-decoration: underline;
+}
+.beepboxEditor .tip:active {
+	color: white;
+}
+
+.beepboxEditor .promptContainer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.beepboxEditor .prompt {
+	margin: auto;
+	text-align: center;
+	background: #000;
+	border-radius: 15px;
+	border: 4px solid #444;
+	color: #fff;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+
+.beepboxEditor .prompt > *:not(:first-child):not(.cancelButton) {
+	margin-top: 1.5em;
+}
+
+.beepboxEditor .prompt h2 {
+	font-size: 2em;
+	margin: 0 16px;
+	font-weight: normal;
+}
+
+.beepboxEditor .prompt p {
+	text-align: left;
+	margin: 1em 0;
+}
+
+/* Use psuedo-elements to add cross-browser up & down arrows to select elements: */
+.beepboxEditor .selectContainer {
+	position: relative;
+}
+.beepboxEditor .selectContainer:not(.menu)::before {
+	content: "";
+	position: absolute;
+	right: 0.3em;
+	top: 0.4em;
+	border-bottom: 0.4em solid currentColor;
+	border-left: 0.3em solid transparent;
+	border-right: 0.3em solid transparent;
+	pointer-events: none;
+}
+.beepboxEditor .selectContainer:not(.menu)::after {
+	content: "";
+	position: absolute;
+	right: 0.3em;
+	bottom: 0.4em;
+	border-top: 0.4em solid currentColor;
+	border-left: 0.3em solid transparent;
+	border-right: 0.3em solid transparent;
+	pointer-events: none;
+}
+.beepboxEditor .selectContainer.menu::after {
+	content: "";
+	position: absolute;
+	right: 0.7em;
+	margin: auto;
+	top: 0;
+	bottom: 0;
+	height: 0;
+	border-top: 0.4em solid currentColor;
+	border-left: 0.3em solid transparent;
+	border-right: 0.3em solid transparent;
+	pointer-events: none;
+}
+.beepboxEditor select {
+	margin: 0;
+	padding: 0 0.3em;
+	display: block;
+	height: 2em;
+	border: none;
+	border-radius: 0.4em;
+	background: #444444;
+	color: inherit;
+	font-size: inherit;
+	cursor: pointer;
+	font-family: inherit;
+
+	-webkit-appearance:none;
+	-moz-appearance: none;
+	appearance: none;
+}
+.beepboxEditor .menu select {
+	padding: 0 2em;
+}
+.beepboxEditor select:focus {
+	background: #777777;
+	outline: none;
+}
+.beepboxEditor .menu select {
+	text-align: center;
+	text-align-last: center;
+}
+.beepboxEditor .editor-settings select {
+	width: 100%;
+}
+
+/* This makes it look better in firefox on my computer... What about others?
+@-moz-document url-prefix() {
+	.beepboxEditor select { padding: 0 2px; }
+}
+*/
+.beepboxEditor button {
+	margin: 0;
+	position: relative;
+	height: 2em;
+	border: none;
+	border-radius: 0.4em;
+	background: #444;
+	color: inherit;
+	font-size: inherit;
+	font-family: inherit;
+	cursor: pointer;
+}
+.beepboxEditor button:focus {
+	background: #777;
+	outline: none;
+}
+
+.beepboxEditor button.cancelButton {
+	float: right;
+	width: 2em;
+	position: absolute;
+	top: 8px;
+	right: 8px;
+}
+
+.beepboxEditor button.playButton, .beepboxEditor button.pauseButton, .beepboxEditor button.okayButton, .beepboxEditor button.exportButton {
+	padding-left: 2em;
+}
+.beepboxEditor button.playButton::before {
+	content: "";
+	position: absolute;
+	left: 0.7em;
+	top: 50%;
+	margin-top: -0.65em;
+	border-left: 1em solid currentColor;
+	border-top: 0.65em solid transparent;
+	border-bottom: 0.65em solid transparent;
+	pointer-events: none;
+}
+.beepboxEditor button.pauseButton::before {
+	content: "";
+	position: absolute;
+	left: 0.7em;
+	top: 50%;
+	margin-top: -0.65em;
+	width: 0.3em;
+	height: 1.3em;
+	background: currentColor;
+	pointer-events: none;
+}
+.beepboxEditor button.pauseButton::after {
+	content: "";
+	position: absolute;
+	left: 1.4em;
+	top: 50%;
+	margin-top: -0.65em;
+	width: 0.3em;
+	height: 1.3em;
+	background: currentColor;
+	pointer-events: none;
+}
+
+.beepboxEditor button.prevBarButton::before {
+	content: "";
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -0.5em;
+	margin-top: -0.5em;
+	width: 0.2em;
+	height: 1em;
+	background: currentColor;
+	pointer-events: none;
+}
+.beepboxEditor button.prevBarButton::after {
+	content: "";
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -0.3em;
+	margin-top: -0.5em;
+	border-right: 0.8em solid currentColor;
+	border-top: 0.5em solid transparent;
+	border-bottom: 0.5em solid transparent;
+	pointer-events: none;
+}
+
+.beepboxEditor button.nextBarButton::before {
+	content: "";
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -0.5em;
+	margin-top: -0.5em;
+	border-left: 0.8em solid currentColor;
+	border-top: 0.5em solid transparent;
+	border-bottom: 0.5em solid transparent;
+	pointer-events: none;
+}
+.beepboxEditor button.nextBarButton::after {
+	content: "";
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: 0.3em;
+	margin-top: -0.5em;
+	width: 0.2em;
+	height: 1em;
+	background: currentColor;
+	pointer-events: none;
+}
+
+.beepboxEditor button.cancelButton::before {
+	content: "";
+	position: absolute;
+	width: 2em;
+	height: 2em;
+	left: 0;
+	top: 0;
+	pointer-events: none;
+	background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="-13 -13 26 26"><path fill="white" d="M -8 -6 L -6 -8 L 0 -2  L 6 -8 L 8 -6 L 2 0 L 8 6 L 6 8 L 0 2 L -6 8 L -8 6 L -2 0 z"></path></svg>');
+	background-repeat: no-repeat;
+}
+
+.beepboxEditor button.okayButton::before {
+	content: "";
+	position: absolute;
+	width: 2em;
+	height: 2em;
+	left: 0;
+	top: 0;
+	pointer-events: none;
+	background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="-13 -13 26 26"><path fill="white" d="M -9 -2 L -8 -3 L -3 2 L 9 -8 L 10 -7 L -3 8 z"></path></svg>');
+	background-repeat: no-repeat;
+}
+
+.beepboxEditor button.exportButton::before {
+	content: "";
+	position: absolute;
+	width: 2em;
+	height: 2em;
+	left: 0;
+	top: 0;
+	pointer-events: none;
+	background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="-13 -13 26 26"><path fill="white" d="M -8 3 L -8 8 L 8 8 L 8 3 L 6 3 L 6 6 L -6 6 L -6 3 z M 0 2 L -4 -2 L -1 -2 L -1 -8 L 1 -8 L 1 -2 L 4 -2 z"></path></svg>');
+	background-repeat: no-repeat;
+}
+
+.beepboxEditor canvas {
+	overflow: hidden;
+	position: absolute;
+	display: block;
+}
+
+.beepboxEditor .trackContainer {
+	overflow-x: hidden;
+}
+
+.beepboxEditor .selectRow {
+	margin: 2px 0;
+	height: 2em;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.beepboxEditor .selectRow > span:first-child {
+	color: #999;
+}
+
+.beepboxEditor .operatorRow {
+	margin: 2px 0;
+	height: 2em;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.beepboxEditor .operatorRow > * {
+	flex-grow: 1;
+	flex-shrink: 1;
+}
+
+.beepboxEditor .editor-widget-column {
+	display: flex;
+	flex-direction: column;
+}
+
+.beepboxEditor .editor-widgets {
+	display: flex;
+	flex-direction: column;
+}
+
+.beepboxEditor .editor-controls {
+	display: flex;
+	flex-direction: column;
+}
+
+.beepboxEditor .editor-menus {
+	display: flex;
+	flex-direction: column;
+}
+.beepboxEditor .editor-menus > * {
+	flex-grow: 1;
+	margin: 2px 0;
+}
+.beepboxEditor .editor-menus > button {
+	padding: 0 2em;
+	white-space: nowrap;
+}
+
+.beepboxEditor .editor-settings {
+	display: flex;
+	flex-direction: column;
+}
+
+.beepboxEditor .editor-song-settings {
+	display: flex;
+	flex-direction: column;
+}
+
+.beepboxEditor .editor-instrument-settings {
+	display: flex;
+	flex-direction: column;
+}
+
+.beepboxEditor .editor-right-side-top > *, .beepboxEditor .editor-right-side-bottom > * {
+	flex-shrink: 0;
+}
+
+.beepboxEditor input[type=text], .beepboxEditor input[type=number] {
+	font-size: inherit;
+	background: transparent;
+	border: 1px solid #777;
+	color: white;
+}
+
+.beepboxEditor input[type=text]::selection, .beepboxEditor input[type=number]::selection {
+	/*background: #7744ff; ugh browsers override the alpha. */
+	background-color: rgba(119,68,255,0.99);
+	color: white;
+}
+
+.beepboxEditor input[type=checkbox] {
+  transform: scale(1.5);
+}
+
+.beepboxEditor input[type=range] {
+	-webkit-appearance: none;
+	color: inherit;
+	width: 100%;
+	height: 2em;
+	font-size: inherit;
+	margin: 0;
+	cursor: pointer;
+	background-color: black;
+	touch-action: pan-y;
+}
+.beepboxEditor input[type=range]:focus {
+	outline: none;
+}
+.beepboxEditor input[type=range]::-webkit-slider-runnable-track {
+	width: 100%;
+	height: 0.5em;
+	cursor: pointer;
+	background: #444;
+}
+.beepboxEditor input[type=range]::-webkit-slider-thumb {
+	height: 2em;
+	width: 0.5em;
+	border-radius: 0.25em;
+	background: currentColor;
+	cursor: pointer;
+	-webkit-appearance: none;
+	margin-top: -0.75em;
+}
+.beepboxEditor input[type=range]:focus::-webkit-slider-runnable-track {
+	background: #777;
+}
+.beepboxEditor input[type=range]::-moz-range-track {
+	width: 100%;
+	height: 0.5em;
+	cursor: pointer;
+	background: #444;
+}
+.beepboxEditor input[type=range]:focus::-moz-range-track {
+	background: #777;
+}
+.beepboxEditor input[type=range]::-moz-range-thumb {
+	height: 2em;
+	width: 0.5em;
+	border-radius: 0.25em;
+	border: none;
+	background: currentColor;
+	cursor: pointer;
+}
+.beepboxEditor input[type=range]::-ms-track {
+	width: 100%;
+	height: 0.5em;
+	cursor: pointer;
+	background: #444;
+	border-color: transparent;
+}
+.beepboxEditor input[type=range]:focus::-ms-track {
+	background: #777;
+}
+.beepboxEditor input[type=range]::-ms-thumb {
+	height: 2em;
+	width: 0.5em;
+	border-radius: 0.25em;
+	background: currentColor;
+	cursor: pointer;
+}
+.beepboxEditor .hintButton {
+	border: 1px solid currentColor;
+	border-radius: 50%;
+	text-decoration: none;
+	width: 1em;
+	height: 1em;
+	text-align: center;
+	margin-left: auto;
+	margin-right: .4em;
+	cursor: pointer;
+}
+
+/* wide screen */
+@media (min-width: 701px) {
+	#beepboxEditorContainer {
+		display: table;
+	}
+	.beepboxEditor {
+		flex-direction: row;
+	}
+	.beepboxEditor:focus-within {
+		outline: 3px solid #555;
+	}
+	.beepboxEditor .trackContainer {
+		width: 512px;
+	}
+	.beepboxEditor .trackSelectBox {
+		display: none;
+	}
+	.beepboxEditor .playback-controls {
+		display: flex;
+		flex-direction: column;
+	}
+	.beepboxEditor .playback-bar-controls {
+		display: flex;
+		flex-direction: row;
+		margin: 2px 0;
+	}
+	.beepboxEditor .playback-volume-controls {
+		display: flex;
+		flex-direction: row;
+		margin: 2px 0;
+		align-items: center;
+	}
+	.beepboxEditor .pauseButton, .beepboxEditor .playButton {
+		flex-grow: 1;
+	}
+	.beepboxEditor .nextBarButton, .beepboxEditor .prevBarButton {
+		flex-grow: 1;
+		margin-left: 10px;
+	}
+	.beepboxEditor .editor-widget-column {
+		margin-left: 6px;
+		width: 14em;
+		flex-direction: column;
+	}
+	.beepboxEditor .editor-widgets {
+		flex-grow: 1;
+	}
+	.beepboxEditor .selectRow > :nth-child(2) {
+		width: 8.6em;
+	}
+}
+
+/* narrow screen */
+@media (max-width: 700px) {
+	.beepboxEditor {
+		flex-direction: column;
+	}
+	.beepboxEditor:focus-within {
+		outline: none;
+	}
+	.beepboxEditor .editorBox {
+		max-height: 75vh;
+	}
+	.beepboxEditor .trackContainer {
+		overflow-x: auto;
+	}
+	.beepboxEditor .barScrollBar {
+		display: none;
+	}
+	.beepboxEditor .playback-controls {
+		display: flex;
+		flex-direction: row;
+		margin: 2px 0;
+	}
+	.beepboxEditor .playback-bar-controls {
+		display: flex;
+		flex-direction: row;
+		flex-grow: 1;
+	}
+	.beepboxEditor .playback-volume-controls {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		flex-grow: 1;
+		margin: 0 2px;
+	}
+	.beepboxEditor .editor-widget-column {
+		flex-direction: column-reverse;
+	}
+	.beepboxEditor .editor-settings {
+		flex-direction: row;
+	}
+	.beepboxEditor .pauseButton, .beepboxEditor .playButton,
+	.beepboxEditor .nextBarButton, .beepboxEditor .prevBarButton {
+		flex-grow: 1;
+		margin: 0 2px;
+	}
+	.beepboxEditor .editor-song-settings, .beepboxEditor .editor-instrument-settings {
+		flex-grow: 1;
+		flex-basis: 0;
+		margin: 0 4px;
+	}
+	.beepboxEditor .selectRow > :nth-child(2) {
+		width: 60%;
+	}
+	.fullWidthOnly {
+		display: none;
+	}
+}
+
+</style></head>
+
+<body>
+	<div id="beepboxEditorContainer"><div class="beepboxEditor" tabindex="0"><div><div class="editorBox noSelection" style="height: 481px; display: flex; flex-direction: row; margin-bottom: 6px;"><div style="width: 32px; height: 100%; overflow: hidden; position: relative; flex-shrink: 0; touch-action: none; display: none;"><canvas width="32" height="481" style="width: 100%; height: 100%;"></canvas><canvas width="32" height="40" style="visibility: hidden;"></canvas></div><div style="height: 100%; overflow: hidden; position: relative; flex-grow: 1; width: 512px;"><svg style="background-color: #000000; touch-action: none; position: absolute;" width="100%" height="100%" viewBox="0 0 512 481" preserveAspectRatio="none"><defs><pattern id="patternEditorNoteBackground" x="0" y="0" width="64" height="156" patternUnits="userSpaceOnUse"><rect x="1" y="1" height="11" fill="#886644" width="62" style="visibility: visible;"></rect><rect x="1" y="144" height="11" fill="#444444" width="62" style="visibility: hidden;"></rect><rect x="1" y="131" height="11" fill="#444444" width="62" style="visibility: visible;"></rect><rect x="1" y="118" height="11" fill="#444444" width="62" style="visibility: hidden;"></rect><rect x="1" y="105" height="11" fill="#444444" width="62" style="visibility: visible;"></rect><rect x="1" y="92" height="11" fill="#444444" width="62" style="visibility: hidden;"></rect><rect x="1" y="79" height="11" fill="#444444" width="62" style="visibility: hidden;"></rect><rect x="1" y="66" height="11" fill="#444444" width="62" style="visibility: visible;"></rect><rect x="1" y="53" height="11" fill="#444444" width="62" style="visibility: hidden;"></rect><rect x="1" y="40" height="11" fill="#444444" width="62" style="visibility: visible;"></rect><rect x="1" y="27" height="11" fill="#444444" width="62" style="visibility: hidden;"></rect><rect x="1" y="14" height="11" fill="#444444" width="62" style="visibility: hidden;"></rect></pattern><pattern id="patternEditorDrumBackground" x="0" y="0" width="64" height="40" patternUnits="userSpaceOnUse"><rect x="1" y="1" height="38" fill="#444444" width="62"></rect></pattern></defs><rect x="0" y="0" width="512" height="480" pointer-events="none" fill="url(#patternEditorDrumBackground)" style="visibility: visible;"></rect><svg><path fill="#a7a7a7" pointer-events="none" d="M 1 241 L 1 199 L 20.33 199 L 20.33 241 L 1 241 z"></path><path fill="#e0e0e0" pointer-events="none" d="M 1 241 L 1 199 L 20.33 220 L 20.33 220 L 1 241 z"></path><path fill="#a7a7a7" pointer-events="none" d="M 1 321 L 1 279 L 20.33 279 L 20.33 321 L 1 321 z"></path><path fill="#e0e0e0" pointer-events="none" d="M 1 321 L 1 279 L 20.33 300 L 20.33 300 L 1 321 z"></path><path fill="#a7a7a7" pointer-events="none" d="M 43.67 241 L 43.67 199 L 63 199 L 63 241 L 43.67 241 z"></path><path fill="#e0e0e0" pointer-events="none" d="M 43.67 241 L 43.67 199 L 63 220 L 63 220 L 43.67 241 z"></path><path fill="#a7a7a7" pointer-events="none" d="M 86.33 241 L 86.33 199 L 105.67 199 L 105.67 241 L 86.33 241 z"></path><path fill="#e0e0e0" pointer-events="none" d="M 86.33 241 L 86.33 199 L 105.67 220 L 105.67 220 L 86.33 241 z"></path><path fill="#a7a7a7" pointer-events="none" d="M 86.33 321 L 86.33 279 L 105.67 279 L 105.67 321 L 86.33 321 z"></path><path fill="#e0e0e0" pointer-events="none" d="M 86.33 321 L 86.33 279 L 105.67 300 L 105.67 300 L 86.33 321 z"></path><path fill="#a7a7a7" pointer-events="none" d="M 129 241 L 129 199 L 148.33 199 L 148.33 241 L 129 241 z"></path><path fill="#e0e0e0" pointer-events="none" d="M 129 241 L 129 199 L 148.33 220 L 148.33 220 L 129 241 z"></path><path fill="#a7a7a7" pointer-events="none" d="M 171.67 241 L 171.67 199 L 191 199 L 191 241 L 171.67 241 z"></path><path fill="#e0e0e0" pointer-events="none" d="M 171.67 241 L 171.67 199 L 191 220 L 191 220 L 171.67 241 z"></path><path fill="#a7a7a7" pointer-events="none" d="M 171.67 321 L 171.67 279 L 191 279 L 191 321 L 171.67 321 z"></path><path fill="#e0e0e0" pointer-events="none" d="M 171.67 321 L 171.67 279 L 191 300 L 191 300 L 171.67 321 z"></path><path fill="#a7a7a7" pointer-events="none" d="M 214.33 241 L 214.33 199 L 233.67 199 L 233.67 241 L 214.33 241 z"></path><path fill="#e0e0e0" pointer-events="none" d="M 214.33 241 L 214.33 199 L 233.67 220 L 233.67 220 L 214.33 241 z"></path><path fill="#a7a7a7" pointer-events="none" d="M 257 241 L 257 199 L 276.33 199 L 276.33 241 L 257 241 z"></path><path fill="#e0e0e0" pointer-events="none" d="M 257 241 L 257 199 L 276.33 220 L 276.33 220 L 257 241 z"></path><path fill="#a7a7a7" pointer-events="none" d="M 257 321 L 257 279 L 276.33 279 L 276.33 321 L 257 321 z"></path><path fill="#e0e0e0" pointer-events="none" d="M 257 321 L 257 279 L 276.33 300 L 276.33 300 L 257 321 z"></path><path fill="#a7a7a7" pointer-events="none" d="M 299.67 241 L 299.67 199 L 319 199 L 319 241 L 299.67 241 z"></path><path fill="#e0e0e0" pointer-events="none" d="M 299.67 241 L 299.67 199 L 319 220 L 319 220 L 299.67 241 z"></path><path fill="#a7a7a7" pointer-events="none" d="M 342.33 241 L 342.33 199 L 361.67 199 L 361.67 241 L 342.33 241 z"></path><path fill="#e0e0e0" pointer-events="none" d="M 342.33 241 L 342.33 199 L 361.67 220 L 361.67 220 L 342.33 241 z"></path><path fill="#a7a7a7" pointer-events="none" d="M 342.33 321 L 342.33 279 L 361.67 279 L 361.67 321 L 342.33 321 z"></path><path fill="#e0e0e0" pointer-events="none" d="M 342.33 321 L 342.33 279 L 361.67 300 L 361.67 300 L 342.33 321 z"></path><path fill="#a7a7a7" pointer-events="none" d="M 385 241 L 385 199 L 404.33 199 L 404.33 241 L 385 241 z"></path><path fill="#e0e0e0" pointer-events="none" d="M 385 241 L 385 199 L 404.33 220 L 404.33 220 L 385 241 z"></path><path fill="#a7a7a7" pointer-events="none" d="M 427.67 241 L 427.67 199 L 447 199 L 447 241 L 427.67 241 z"></path><path fill="#e0e0e0" pointer-events="none" d="M 427.67 241 L 427.67 199 L 447 220 L 447 220 L 427.67 241 z"></path><path fill="#a7a7a7" pointer-events="none" d="M 427.67 321 L 427.67 279 L 447 279 L 447 321 L 427.67 321 z"></path><path fill="#e0e0e0" pointer-events="none" d="M 427.67 321 L 427.67 279 L 447 300 L 447 300 L 427.67 321 z"></path><path fill="#a7a7a7" pointer-events="none" d="M 470.33 241 L 470.33 199 L 489.67 199 L 489.67 241 L 470.33 241 z"></path><path fill="#e0e0e0" pointer-events="none" d="M 470.33 241 L 470.33 199 L 489.67 220 L 489.67 220 L 470.33 241 z"></path></svg><path fill="none" stroke="white" stroke-width="2" pointer-events="none" visibility="hidden" d="M 150.33 481 L 150.33 439 L 169.67 460 L 169.67 460 L 150.33 481 z"></path><rect id="" x="501.14" y="0" width="4" height="481" fill="white" pointer-events="none" visibility="hidden"></rect></svg></div><div id="octaveScrollBarContainer" style="width: 20px; height: 100%; overflow: hidden; position: relative; flex-shrink: 0; display: none;"><svg style="background-color: rgb(0, 0, 0); touch-action: pan-x; position: absolute; visibility: hidden;" width="20" height="100%" viewBox="0 0 20 481" preserveAspectRatio="none"><rect fill="#444444" x="2" y="272.57142857142856" width="16" height="208.42857142857142"></rect><rect fill="#886644" x="0" y="0" width="20" height="4"></rect><rect fill="#886644" x="0" y="68.14285714285714" width="20" height="4"></rect><rect fill="#886644" x="0" y="136.28571428571428" width="20" height="4"></rect><rect fill="#886644" x="0" y="204.42857142857142" width="20" height="4"></rect><rect fill="#886644" x="0" y="272.57142857142856" width="20" height="4"></rect><rect fill="#886644" x="0" y="340.71428571428567" width="20" height="4"></rect><rect fill="#886644" x="0" y="408.85714285714283" width="20" height="4"></rect><rect fill="#886644" x="0" y="477" width="20" height="4"></rect><rect fill="none" stroke="white" stroke-width="2" pointer-events="none" x="1" y="272.57142857142856" width="18" height="208.42857142857142" style="visibility: hidden;"></rect><path fill="white" pointer-events="none" d="M 10 9 L 16 20 L 4 20 z" style="visibility: hidden;"></path><path fill="white" pointer-events="none" d="M 10 472 L 16 461 L 4 461 z" style="visibility: hidden;"></path></svg></div></div><div class="trackContainer"><div style="height: 128px; position: relative; overflow: hidden; width: 512px;"><svg style="background-color: #000000; position: absolute;" height="128" width="512"><g><svg x="0" y="0" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#25f3ff">1</text></svg><svg x="32" y="0" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#25f3ff">1</text></svg><svg x="64" y="0" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#25f3ff">1</text></svg><svg x="96" y="0" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#25f3ff">1</text></svg><svg x="128" y="0" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#25f3ff">1</text></svg><svg x="160" y="0" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#25f3ff">1</text></svg><svg x="192" y="0" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#25f3ff">1</text></svg><svg x="224" y="0" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#0099a1">2</text></svg><svg x="256" y="0" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#25f3ff">1</text></svg><svg x="288" y="0" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#25f3ff">1</text></svg><svg x="320" y="0" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#25f3ff">1</text></svg><svg x="352" y="0" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#25f3ff">1</text></svg><svg x="384" y="0" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#25f3ff">1</text></svg><svg x="416" y="0" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#25f3ff">1</text></svg><svg x="448" y="0" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#25f3ff">1</text></svg><svg x="480" y="0" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#25f3ff">1</text></svg><svg x="0" y="32" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ffff25">1</text></svg><svg x="32" y="32" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ffff25">1</text></svg><svg x="64" y="32" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ffff25">1</text></svg><svg x="96" y="32" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ffff25">1</text></svg><svg x="128" y="32" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ffff25">1</text></svg><svg x="160" y="32" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ffff25">1</text></svg><svg x="192" y="32" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ffff25">1</text></svg><svg x="224" y="32" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ffff25">1</text></svg><svg x="256" y="32" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ffff25">1</text></svg><svg x="288" y="32" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ffff25">1</text></svg><svg x="320" y="32" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ffff25">1</text></svg><svg x="352" y="32" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ffff25">1</text></svg><svg x="384" y="32" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ffff25">1</text></svg><svg x="416" y="32" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ffff25">1</text></svg><svg x="448" y="32" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ffff25">1</text></svg><svg x="480" y="32" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ffff25">1</text></svg><svg x="0" y="64" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ff9752">1</text></svg><svg x="32" y="64" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ff9752">1</text></svg><svg x="64" y="64" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ff9752">2</text></svg><svg x="96" y="64" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ff9752">2</text></svg><svg x="128" y="64" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ff9752">1</text></svg><svg x="160" y="64" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ff9752">3</text></svg><svg x="192" y="64" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ff9752">1</text></svg><svg x="224" y="64" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ff9752">1</text></svg><svg x="256" y="64" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ff9752">1</text></svg><svg x="288" y="64" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ff9752">1</text></svg><svg x="320" y="64" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ff9752">1</text></svg><svg x="352" y="64" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ff9752">1</text></svg><svg x="384" y="64" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ff9752">1</text></svg><svg x="416" y="64" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ff9752">1</text></svg><svg x="448" y="64" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ff9752">1</text></svg><svg x="480" y="64" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#ff9752">1</text></svg><svg x="0" y="96" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#aaaaaa">1</text></svg><svg x="32" y="96" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#aaaaaa">2</text></svg><svg x="64" y="96" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#aaaaaa">3</text></svg><svg x="96" y="96" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#aaaaaa"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#000000">4</text></svg><svg x="128" y="96" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#aaaaaa">1</text></svg><svg x="160" y="96" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#aaaaaa">2</text></svg><svg x="192" y="96" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#aaaaaa">4</text></svg><svg x="224" y="96" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#aaaaaa">1</text></svg><svg x="256" y="96" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#aaaaaa">1</text></svg><svg x="288" y="96" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#aaaaaa">1</text></svg><svg x="320" y="96" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#aaaaaa">1</text></svg><svg x="352" y="96" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#aaaaaa">1</text></svg><svg x="384" y="96" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#aaaaaa">1</text></svg><svg x="416" y="96" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#aaaaaa">1</text></svg><svg x="448" y="96" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#aaaaaa">1</text></svg><svg x="480" y="96" style="visibility: visible;"><rect width="30" height="30" x="1" y="1" fill="#444444"></rect><text x="16" y="23" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#aaaaaa">1</text></svg></g><rect fill="none" stroke="white" stroke-width="2" pointer-events="none" x="129" y="1" width="30" height="30" style="visibility: visible;"></rect><path fill="#fff" stroke="black" stroke-width="1" pointer-events="none" d="M 121.6 99.2 L 127.19999999999999 108.8 L 116 108.8 z" style="visibility: hidden;"></path><path fill="#000" stroke="black" stroke-width="1" pointer-events="none" d="M 121.6 124.8 L 127.19999999999999 115.2 L 116 115.2 z" style="visibility: hidden;"></path><rect fill="white" x="-2" y="0" width="4" height="128"></rect></svg><select class="trackSelectBox" style="width: 32px; height: 32px; background: none; border: none; color: transparent; position: absolute; left: 96px; top: 96px;"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select></div><div style="height: 20px; position: relative; margin: 5px 0px; width: 512px;"><svg style="background-color: #000000; touch-action: pan-y; position: absolute;" height="20" width="512"><path fill="none" stroke="#7744ff" stroke-width="4" d="M 10 2 L 214 2 A 8 8 0 0 1 214 18 L 10 18 A 8 8 0 0 1 10 2 z"></path><path fill="white" pointer-events="none" style="visibility: hidden;" d="M 10 4 L 10 4 A 6 6 0 0 1 10 16 L 10 16 A 6 6 0 0 1 10 4 z"></path></svg></div></div><div class="barScrollBar" style="width: 512px; height: 20px; overflow: hidden; position: relative; display: none;"><svg style="background-color: #000000; touch-action: pan-y; position: absolute;" width="512" height="20"><svg pointer-events="none"><rect fill="#444444" x="-1" y="0" width="2" height="20"></rect><rect fill="#444444" x="30.9375" y="6.666666666666667" width="2" height="6.666666666666666"></rect><rect fill="#444444" x="62.875" y="6.666666666666667" width="2" height="6.666666666666666"></rect><rect fill="#444444" x="94.8125" y="6.666666666666667" width="2" height="6.666666666666666"></rect><rect fill="#444444" x="126.75" y="2.5" width="2" height="15"></rect><rect fill="#444444" x="158.6875" y="6.666666666666667" width="2" height="6.666666666666666"></rect><rect fill="#444444" x="190.625" y="6.666666666666667" width="2" height="6.666666666666666"></rect><rect fill="#444444" x="222.5625" y="6.666666666666667" width="2" height="6.666666666666666"></rect><rect fill="#444444" x="254.5" y="2.5" width="2" height="15"></rect><rect fill="#444444" x="286.4375" y="6.666666666666667" width="2" height="6.666666666666666"></rect><rect fill="#444444" x="318.375" y="6.666666666666667" width="2" height="6.666666666666666"></rect><rect fill="#444444" x="350.3125" y="6.666666666666667" width="2" height="6.666666666666666"></rect><rect fill="#444444" x="382.25" y="2.5" width="2" height="15"></rect><rect fill="#444444" x="414.1875" y="6.666666666666667" width="2" height="6.666666666666666"></rect><rect fill="#444444" x="446.125" y="6.666666666666667" width="2" height="6.666666666666666"></rect><rect fill="#444444" x="478.0625" y="6.666666666666667" width="2" height="6.666666666666666"></rect><rect fill="#444444" x="510" y="0" width="2" height="20"></rect></svg><rect fill="#444444" x="0" y="2" width="511" height="16"></rect><rect fill="none" stroke="white" stroke-width="2" pointer-events="none" x="0" y="1" width="511" height="18" style="visibility: hidden;"></rect><path fill="white" pointer-events="none" d="M 9 10 L 20 16 L 20 4 z" style="visibility: hidden;"></path><path fill="white" pointer-events="none" d="M 503 10 L 492 16 L 492 4 z" style="visibility: hidden;"></path></svg></div></div><div class="editor-widget-column noSelection"><div style="text-align: center; color: #999;">BeepBox 3.0</div><div class="editor-widgets"><div class="editor-controls"><div class="playback-controls"><div class="playback-bar-controls"><button style="width: 80px;" type="button" class="playButton" title="Play (Space)">Play</button><button class="prevBarButton" style="width: 40px;" type="button" title="Previous Bar (left bracket)"></button><button class="nextBarButton" style="width: 40px;" type="button" title="Next Bar (right bracket)"></button></div><div class="playback-volume-controls"><svg style="flex-shrink: 0;" width="2em" height="2em" viewBox="0 0 26 26"><path d="M 4 16 L 4 10 L 8 10 L 13 5 L 13 21 L 8 16 z M 15 11 L 16 10 A 7.2 7.2 0 0 1 16 16 L 15 15 A 5.8 5.8 0 0 0 15 12 z M 18 8 L 19 7 A 11.5 11.5 0 0 1 19 19 L 18 18 A 10.1 10.1 0 0 0 18 8 z" fill="#777"></path></svg><input title="main volume" style="width: 5em; flex-grow: 1; margin: 0;" type="range" min="0" max="100" value="50" step="1"></div></div></div><div class="editor-settings"><div class="editor-song-settings"><div class="editor-menus"><div class="selectContainer menu"><select style="width: 100%;"><option selected="" disabled="">File</option><option value="new">+ New Blank Song</option><option value="import">↑ Import...</option><option value="export">↓ Export...</option></select><svg style="flex-shrink: 0; position: absolute; left: 0; top: 50%; margin-top: -1em; pointer-events: none;" width="2em" height="2em" viewBox="-5 -21 26 26"><path d="M 2 0 L 2 -16 L 10 -16 L 14 -12 L 14 0 z M 3 -1 L 13 -1 L 13 -11 L 9 -11 L 9 -15 L 3 -15 z" fill="currentColor"></path></svg></div><div class="selectContainer menu"><select style="width: 100%;"><option selected="" disabled="">Edit</option><option value="undo">Undo (Z)</option><option value="redo">Redo (Y)</option><option value="copy">Copy Pattern Notes (C)</option><option value="paste">Paste Pattern Notes (V)</option><option value="transposeUp">Move Pattern Notes Up (+)</option><option value="transposeDown">Move Pattern Notes Down (-)</option><option value="forceScale">Snap All Notes To Scale</option><option value="forceRhythm">Snap All Notes To Rhythm</option><option value="moveNotesSideways">Move All Notes Sideways...</option><option value="beatsPerBar">Change Beats Per Bar...</option><option value="barCount">Change Song Length...</option><option value="channelSettings">Channel Settings...</option><option value="detectKey">Detect Key</option></select><svg style="flex-shrink: 0; position: absolute; left: 0; top: 50%; margin-top: -1em; pointer-events: none;" width="2em" height="2em" viewBox="-5 -21 26 26"><path d="M 0 0 L 1 -4 L 4 -1 z M 2 -5 L 10 -13 L 13 -10 L 5 -2 zM 11 -14 L 13 -16 L 14 -16 L 16 -14 L 16 -13 L 14 -11 z" fill="currentColor"></path></svg></div><div class="selectContainer menu"><select style="width: 100%;"><option selected="" disabled="">Preferences</option><option value="autoPlay">✓ Auto Play On Load</option><option value="autoFollow">Auto Follow Track</option><option value="showLetters">Show Piano Keys</option><option value="showFifth">Highlight "Fifth" Notes</option><option value="showChannels">Show All Channels</option><option value="showScrollBar">Octave Scroll Bar</option><option value="alwaysShowSettings">Customize All Instruments</option></select><svg style="flex-shrink: 0; position: absolute; left: 0; top: 50%; margin-top: -1em; pointer-events: none;" width="2em" height="2em" viewBox="-13 -13 26 26"><path d="M 5.78 -1.6 L 7.93 -0.94 L 7.93 0.94 L 5.78 1.6 L 4.85 3.53 L 5.68 5.61 L 4.21 6.78 L 2.36 5.52 L 0.27 5.99 L -0.85 7.94 L -2.68 7.52 L -2.84 5.28 L -4.52 3.95 L -6.73 4.28 L -7.55 2.59 L -5.9 1.07 L -5.9 -1.07 L -7.55 -2.59 L -6.73 -4.28 L -4.52 -3.95 L -2.84 -5.28 L -2.68 -7.52 L -0.85 -7.94 L 0.27 -5.99 L 2.36 -5.52 L 4.21 -6.78 L 5.68 -5.61 L 4.85 -3.53 M 2.92 0.67 L 2.92 -0.67 L 2.35 -1.87 L 1.3 -2.7 L 0 -3 L -1.3 -2.7 L -2.35 -1.87 L -2.92 -0.67 L -2.92 0.67 L -2.35 1.87 L -1.3 2.7 L -0 3 L 1.3 2.7 L 2.35 1.87 z" fill="currentColor"></path></svg></div></div><div style="margin: 3px 0; text-align: center; color: #999;">Song Settings</div><div class="selectRow"><span class="tip">Scale: </span><div class="selectContainer"><select><option value="0">easy :)</option><option value="1">easy :(</option><option value="2">island :)</option><option value="3">island :(</option><option value="4">blues :)</option><option value="5">blues :(</option><option value="6">normal :)</option><option value="7">normal :(</option><option value="8">dbl harmonic :)</option><option value="9">dbl harmonic :(</option><option value="10">enigma</option><option value="11">expert</option></select></div></div><div class="selectRow"><span class="tip">Key: </span><div class="selectContainer"><select><option value="0">B</option><option value="1">A♯</option><option value="2">A</option><option value="3">G♯</option><option value="4">G</option><option value="5">F♯</option><option value="6">F</option><option value="7">E</option><option value="8">D♯</option><option value="9">D</option><option value="10">C♯</option><option value="11">C</option></select></div></div><div class="selectRow"><span class="tip">Tempo: </span><span style="display: flex;"><input style="margin: 0; width: 4em; flex-grow: 1; vertical-align: middle;" type="range" min="0" max="14" value="7" step="1"><input style="width: 3em; margin-left: 0.4em; vertical-align: middle;" type="number" step="1"></span></div><div class="selectRow"><span class="tip">Reverb: </span><input style="margin: 0;" type="range" min="0" max="3" value="0" step="1"></div><div class="selectRow"><span class="tip">Rhythm: </span><div class="selectContainer"><select><option value="0">÷3 (triplets)</option><option value="1">÷4 (standard)</option><option value="2">÷6</option><option value="3">÷8</option><option value="4">freehand</option></select></div></div></div><div class="editor-instrument-settings"><div style="margin: 3px 0; text-align: center; color: #999;">Instrument Settings</div><div class="editor-controls" style="color: rgb(224, 224, 224);"><div class="selectRow" style="display: none;"><span class="tip">Instrument: </span><div class="selectContainer"><select><option value="0">1</option></select></div></div><div class="selectRow"><span class="tip">Volume: </span><input style="margin: 0;" type="range" min="-7" max="0" value="0" step="1"></div><div class="selectRow"><span class="tip">Type: </span><div class="selectContainer"><select style="display: none;"><optgroup label="Edit"><option value="copyInstrument">Copy Instrument</option><option value="pasteInstrument">Paste Instrument</option><option value="randomPreset">Random Preset</option><option value="randomGenerated">Random Generated</option></optgroup><optgroup label="Custom Instruments"><option value="0">chip wave</option><option value="6">pulse width</option><option value="5">harmonics</option><option value="3">spectrum</option><option value="1">FM (expert)</option></optgroup><optgroup label="Retro Presets"><option value="64">square wave</option><option value="65">triangle wave</option><option value="66">square lead</option><option value="67">sawtooth lead 1</option><option value="68">sawtooth lead 2</option><option value="70">FM twang</option><option value="71">FM bass</option><option value="72">FM flute</option><option value="73">FM organ</option></optgroup><optgroup label="Keyboard Presets"><option value="128">grand piano</option><option value="129">bright piano</option><option value="130">electric grand</option><option value="131">honky-tonk piano</option><option value="132">electric piano 1</option><option value="133">electric piano 2</option><option value="134">harpsichord</option><option value="135">clavinet</option><option value="136">dulcimer</option></optgroup><optgroup label="Idiophone Presets"><option value="192">celesta</option><option value="193">glockenspiel</option><option value="194">music box 1</option><option value="195">music box 2</option><option value="196">vibraphone</option><option value="197">marimba</option><option value="198">kalimba</option><option value="199">xylophone</option><option value="200">tubular bell</option><option value="201">bell synth</option><option value="202">rain drop</option><option value="203">crystal</option><option value="204">tinkle bell</option><option value="205">agogo</option></optgroup><optgroup label="Guitar Presets"><option value="256">nylon guitar</option><option value="257">steel guitar</option><option value="258">jazz guitar</option><option value="259">clean guitar</option><option value="260">muted guitar</option></optgroup><optgroup label="Picked Bass Presets"><option value="320">acoustic bass</option><option value="321">fingered bass</option><option value="322">picked bass</option><option value="323">fretless bass</option><option value="324">slap bass 1</option><option value="325">slap bass 2</option><option value="326">bass synth 1</option><option value="327">bass synth 2</option><option value="328">bass &amp; lead</option></optgroup><optgroup label="Picked String Presets"><option value="384">pizzicato strings</option><option value="385">harp</option><option value="386">sitar</option><option value="387">banjo</option><option value="388">ukulele</option><option value="389">shamisen</option><option value="390">koto</option></optgroup><optgroup label="Distortion Presets"><option value="448">overdrive guitar</option><option value="449">distortion guitar</option><option value="450">charango synth</option><option value="451">guitar harmonics</option><option value="452">distorted synth 1</option><option value="453">distorted synth 2</option><option value="454">distorted synth 3</option></optgroup><optgroup label="Bellow Presets"><option value="512">drawbar organ 1</option><option value="513">drawbar organ 2</option><option value="514">percussive organ</option><option value="515">rock organ</option><option value="516">pipe organ</option><option value="517">reed organ</option><option value="518">accordion</option><option value="519">bandoneon</option><option value="520">bagpipe</option></optgroup><optgroup label="String Presets"><option value="576">violin</option><option value="577">viola</option><option value="578">cello</option><option value="579">contrabass</option><option value="580">fiddle</option><option value="581">tremolo strings</option><option value="582">strings</option><option value="583">slow strings</option><option value="584">strings synth 1</option><option value="585">strings synth 2</option><option value="586">orchestra hit</option></optgroup><optgroup label="Vocal Presets"><option value="640">choir soprano</option><option value="641">choir tenor</option><option value="642">choir bass</option><option value="643">solo soprano</option><option value="644">solo tenor</option><option value="645">solo bass</option><option value="646">voice ooh</option><option value="647">voice synth</option><option value="648">vox synth lead</option><option value="649">tiny robot</option><option value="650">yowie</option><option value="651">mouse</option><option value="652">gumdrop</option><option value="653">echo drop</option><option value="654">dark choir</option></optgroup><optgroup label="Brass Presets"><option value="704">trumpet</option><option value="705">trombone</option><option value="706">tuba</option><option value="707">muted trumpet</option><option value="708">french horn</option><option value="709">brass section</option><option value="710">brass synth 1</option><option value="711">brass synth 2</option><option value="712">pulse brass</option></optgroup><optgroup label="Reed Presets"><option value="768">soprano sax</option><option value="769">alto sax</option><option value="770">tenor sax</option><option value="771">baritone sax</option><option value="772">sax synth</option><option value="773">shehnai</option><option value="774">oboe</option><option value="775">english horn</option><option value="776">bassoon</option><option value="777">clarinet</option><option value="778">harmonica</option></optgroup><optgroup label="Flute Presets"><option value="832">flute</option><option value="833">recorder</option><option value="834">whistle</option><option value="835">ocarina</option><option value="836">piccolo</option><option value="837">shakuhachi</option><option value="838">pan flute</option><option value="839">blown bottle</option><option value="840">calliope</option><option value="841">chiffer</option><option value="842">breath noise</option></optgroup><optgroup label="Pad Presets"><option value="896">new age pad</option><option value="897">warm pad</option><option value="898">polysynth pad</option><option value="899">space voice pad</option><option value="900">bowed glass pad</option><option value="901">metallic pad</option><option value="902">sweep pad</option><option value="903">atmosphere</option><option value="904">brightness</option><option value="905">goblins</option><option value="906">sci-fi</option><option value="907">flutter pad</option><option value="908">feedback pad</option></optgroup><optgroup label="Drum Presets"><option value="961">steel pan</option><option value="962">steel pan synth</option><option value="963">timpani</option><option value="964">dark strike</option></optgroup><optgroup label="Novelty Presets"><option value="1024">guitar fret noise</option><option value="1025">fifth saw lead</option><option value="1026">fifth swell</option><option value="1027">soundtrack</option><option value="1030">bird tweet</option><option value="1031">telephone ring</option><option value="1035">scoot</option><option value="1036">buzz saw</option><option value="1037">mosquito</option></optgroup></select><select style=""><optgroup label="Edit"><option value="copyInstrument">Copy Instrument</option><option value="pasteInstrument">Paste Instrument</option><option value="randomPreset">Random Preset</option><option value="randomGenerated">Random Generated</option></optgroup><optgroup label="Custom Instruments"><option value="2">basic noise</option><option value="3">spectrum</option><option value="4">drumset</option></optgroup><optgroup label="Retro Presets"><option value="69">chip noise</option></optgroup><optgroup label="Drum Presets"><option value="960">standard drumset</option><option value="965">woodblock</option><option value="966">taiko drum</option><option value="967">melodic drum</option><option value="968">drum synth</option><option value="969">tom-tom</option><option value="970">metal pipe</option></optgroup><optgroup label="Novelty Presets"><option value="1028">reverse cymbal</option><option value="1029">seashore</option><option value="1032">helicopter</option><option value="1033">applause</option><option value="1034">gunshot</option><option value="1038">breathing</option><option value="1039">klaxon synth</option></optgroup></select></div></div><button type="button" style="margin: 2px 0px; display: none;">Customize Instrument<svg style="flex-shrink: 0; position: absolute; left: 0; top: 50%; margin-top: -1em; pointer-events: none;" width="2em" height="2em" viewBox="-13 -13 26 26"><g transform="translate(0,1)"><circle cx="0" cy="0" r="6.5" stroke="currentColor" stroke-width="1" fill="none"></circle><rect x="-1" y="-5" width="2" height="4" fill="currentColor" transform="rotate(30)"></rect><circle cx="-7.79" cy="4.5" r="0.75" fill="currentColor"></circle><circle cx="-9" cy="0" r="0.75" fill="currentColor"></circle><circle cx="-7.79" cy="-4.5" r="0.75" fill="currentColor"></circle><circle cx="-4.5" cy="-7.79" r="0.75" fill="currentColor"></circle><circle cx="0" cy="-9" r="0.75" fill="currentColor"></circle><circle cx="4.5" cy="-7.79" r="0.75" fill="currentColor"></circle><circle cx="7.79" cy="-4.5" r="0.75" fill="currentColor"></circle><circle cx="9" cy="0" r="0.75" fill="currentColor"></circle><circle cx="7.79" cy="4.5" r="0.75" fill="currentColor"></circle></g></svg></button><div class="editor-controls" style=""><div class="selectRow" title="Low-pass Filter Cutoff Frequency" style=""><span class="tip">Filter Cut:</span><input style="margin: 0;" type="range" min="0" max="10" value="6" step="1"></div><div class="selectRow" title="Low-pass Filter Peak Resonance" style=""><span class="tip">Filter Peak:</span><input style="margin: 0;" type="range" min="0" max="7" value="6" step="1"></div><div class="selectRow" title="Low-pass Filter Envelope" style=""><span class="tip">Filter Env:</span><div class="selectContainer"><select><option value="0">custom</option><option value="1">steady</option><option value="2">punch</option><option value="3">flare 1</option><option value="4">flare 2</option><option value="5">flare 3</option><option value="6">twang 1</option><option value="7">twang 2</option><option value="8">twang 3</option><option value="9">swell 1</option><option value="10">swell 2</option><option value="11">swell 3</option><option value="12">tremolo1</option><option value="13">tremolo2</option><option value="14">tremolo3</option><option value="15">tremolo4</option><option value="16">tremolo5</option><option value="17">tremolo6</option><option value="18">decay 1</option><option value="19">decay 2</option><option value="20">decay 3</option></select></div></div><div class="selectRow" style=""><span class="tip">Transition:</span><div class="selectContainer"><select><option value="0">seamless</option><option value="1">hard</option><option value="2">soft</option><option value="3">slide</option><option value="4">cross fade</option><option value="5">hard fade</option><option value="6">medium fade</option><option value="7">soft fade</option></select></div></div><div class="selectRow"><span class="tip">Effects:</span><div class="selectContainer"><select><option value="0">none</option><option value="1">reverb</option><option value="2">chorus</option><option value="3">chorus &amp; reverb</option></select></div></div><div class="selectRow" style=""><span class="tip">Chords:</span><div class="selectContainer"><select><option value="0">harmony</option><option value="1">strum</option><option value="2">arpeggio</option><option value="3" hidden="">custom interval</option></select></div></div><div class="selectRow" style="display: none;"><span class="tip">Vibrato:</span><div class="selectContainer"><select><option value="0">none</option><option value="1">light</option><option value="2">delayed</option><option value="3">heavy</option><option value="4">shaky</option></select></div></div><div class="selectRow" style="display: none;"><span class="tip">Interval:</span><div class="selectContainer"><select><option value="0">union</option><option value="1">shimmer</option><option value="2">hum</option><option value="3">honky tonk</option><option value="4">dissonant</option><option value="5">fifth</option><option value="6">octave</option><option value="7">bowed</option></select></div></div><div class="selectRow" style="display: none;"><span class="tip">Wave: </span><div class="selectContainer"><select><option value="0">rounded</option><option value="1">triangle</option><option value="2">square</option><option value="3">1/4 pulse</option><option value="4">1/8 pulse</option><option value="5">sawtooth</option><option value="6">double saw</option><option value="7">double pulse</option><option value="8">spiky</option></select></div></div><div class="selectRow" style=""><span class="tip">Noise: </span><div class="selectContainer"><select><option value="0">retro</option><option value="1">white</option><option value="2">clang</option><option value="3">buzz</option><option value="4">hollow</option></select></div></div><div class="selectRow" style="display: none;"><span class="tip">Algorithm: </span><div class="selectContainer"><select><option value="0">1←(2 3 4)</option><option value="1">1←(2 3←4)</option><option value="2">1←2←(3 4)</option><option value="3">1←(2 3)←4</option><option value="4">1←2←3←4</option><option value="5">1←3 2←4</option><option value="6">1 2←(3 4)</option><option value="7">1 2←3←4</option><option value="8">(1 2)←3←4</option><option value="9">(1 2)←(3 4)</option><option value="10">1 2 3←4</option><option value="11">(1 2 3)←4</option><option value="12">1 2 3 4</option></select></div></div><div class="editor-controls" style="display: none;"><div class="operatorRow" style="color: #999; height: 1em; margin-top: 0.5em;"><div style="margin-right: .1em; visibility: hidden;">1.</div><div style="width: 3em; margin-right: .3em;" class="tip">Freq:</div><div style="width: 4em; margin: 0;" class="tip">Volume:</div><div style="width: 5em; margin-left: .3em;" class="tip">Envelope:</div></div><div class="operatorRow"><div style="margin-right: .1em; color: #999;">1.</div><div class="selectContainer" style="width: 3em; margin-right: .3em;"><select style="width: 100%;" title="Frequency"><option value="0">1×</option><option value="1">~1×</option><option value="2">2×</option><option value="3">~2×</option><option value="4">3×</option><option value="5">4×</option><option value="6">5×</option><option value="7">6×</option><option value="8">7×</option><option value="9">8×</option><option value="10">9×</option><option value="11">11×</option><option value="12">13×</option><option value="13">16×</option><option value="14">20×</option></select></div><input style="margin: 0; width: 4em;" type="range" min="0" max="15" value="0" step="1" title="Volume"><div class="selectContainer" style="width: 5em; margin-left: .3em;"><select style="width: 100%;" title="Envelope"><option value="0">custom</option><option value="1">steady</option><option value="2">punch</option><option value="3">flare 1</option><option value="4">flare 2</option><option value="5">flare 3</option><option value="6">twang 1</option><option value="7">twang 2</option><option value="8">twang 3</option><option value="9">swell 1</option><option value="10">swell 2</option><option value="11">swell 3</option><option value="12">tremolo1</option><option value="13">tremolo2</option><option value="14">tremolo3</option><option value="15">tremolo4</option><option value="16">tremolo5</option><option value="17">tremolo6</option><option value="18">decay 1</option><option value="19">decay 2</option><option value="20">decay 3</option></select></div></div><div class="operatorRow"><div style="margin-right: .1em; color: #999;">2.</div><div class="selectContainer" style="width: 3em; margin-right: .3em;"><select style="width: 100%;" title="Frequency"><option value="0">1×</option><option value="1">~1×</option><option value="2">2×</option><option value="3">~2×</option><option value="4">3×</option><option value="5">4×</option><option value="6">5×</option><option value="7">6×</option><option value="8">7×</option><option value="9">8×</option><option value="10">9×</option><option value="11">11×</option><option value="12">13×</option><option value="13">16×</option><option value="14">20×</option></select></div><input style="margin: 0; width: 4em;" type="range" min="0" max="15" value="0" step="1" title="Volume"><div class="selectContainer" style="width: 5em; margin-left: .3em;"><select style="width: 100%;" title="Envelope"><option value="0">custom</option><option value="1">steady</option><option value="2">punch</option><option value="3">flare 1</option><option value="4">flare 2</option><option value="5">flare 3</option><option value="6">twang 1</option><option value="7">twang 2</option><option value="8">twang 3</option><option value="9">swell 1</option><option value="10">swell 2</option><option value="11">swell 3</option><option value="12">tremolo1</option><option value="13">tremolo2</option><option value="14">tremolo3</option><option value="15">tremolo4</option><option value="16">tremolo5</option><option value="17">tremolo6</option><option value="18">decay 1</option><option value="19">decay 2</option><option value="20">decay 3</option></select></div></div><div class="operatorRow"><div style="margin-right: .1em; color: #999;">3.</div><div class="selectContainer" style="width: 3em; margin-right: .3em;"><select style="width: 100%;" title="Frequency"><option value="0">1×</option><option value="1">~1×</option><option value="2">2×</option><option value="3">~2×</option><option value="4">3×</option><option value="5">4×</option><option value="6">5×</option><option value="7">6×</option><option value="8">7×</option><option value="9">8×</option><option value="10">9×</option><option value="11">11×</option><option value="12">13×</option><option value="13">16×</option><option value="14">20×</option></select></div><input style="margin: 0; width: 4em;" type="range" min="0" max="15" value="0" step="1" title="Volume"><div class="selectContainer" style="width: 5em; margin-left: .3em;"><select style="width: 100%;" title="Envelope"><option value="0">custom</option><option value="1">steady</option><option value="2">punch</option><option value="3">flare 1</option><option value="4">flare 2</option><option value="5">flare 3</option><option value="6">twang 1</option><option value="7">twang 2</option><option value="8">twang 3</option><option value="9">swell 1</option><option value="10">swell 2</option><option value="11">swell 3</option><option value="12">tremolo1</option><option value="13">tremolo2</option><option value="14">tremolo3</option><option value="15">tremolo4</option><option value="16">tremolo5</option><option value="17">tremolo6</option><option value="18">decay 1</option><option value="19">decay 2</option><option value="20">decay 3</option></select></div></div><div class="operatorRow"><div style="margin-right: .1em; color: #999;">4.</div><div class="selectContainer" style="width: 3em; margin-right: .3em;"><select style="width: 100%;" title="Frequency"><option value="0">1×</option><option value="1">~1×</option><option value="2">2×</option><option value="3">~2×</option><option value="4">3×</option><option value="5">4×</option><option value="6">5×</option><option value="7">6×</option><option value="8">7×</option><option value="9">8×</option><option value="10">9×</option><option value="11">11×</option><option value="12">13×</option><option value="13">16×</option><option value="14">20×</option></select></div><input style="margin: 0; width: 4em;" type="range" min="0" max="15" value="0" step="1" title="Volume"><div class="selectContainer" style="width: 5em; margin-left: .3em;"><select style="width: 100%;" title="Envelope"><option value="0">custom</option><option value="1">steady</option><option value="2">punch</option><option value="3">flare 1</option><option value="4">flare 2</option><option value="5">flare 3</option><option value="6">twang 1</option><option value="7">twang 2</option><option value="8">twang 3</option><option value="9">swell 1</option><option value="10">swell 2</option><option value="11">swell 3</option><option value="12">tremolo1</option><option value="13">tremolo2</option><option value="14">tremolo3</option><option value="15">tremolo4</option><option value="16">tremolo5</option><option value="17">tremolo6</option><option value="18">decay 1</option><option value="19">decay 2</option><option value="20">decay 3</option></select></div></div></div><div class="selectRow" style="display: none;"><span class="tip">Feedback:</span><div class="selectContainer"><select><option value="0">1⟲</option><option value="1">2⟲</option><option value="2">3⟲</option><option value="3">4⟲</option><option value="4">1⟲ 2⟲</option><option value="5">3⟲ 4⟲</option><option value="6">1⟲ 2⟲ 3⟲</option><option value="7">2⟲ 3⟲ 4⟲</option><option value="8">1⟲ 2⟲ 3⟲ 4⟲</option><option value="9">1→2</option><option value="10">1→3</option><option value="11">1→4</option><option value="12">2→3</option><option value="13">2→4</option><option value="14">3→4</option><option value="15">1→3 2→4</option><option value="16">1→4 2→3</option><option value="17">1→2→3→4</option></select></div></div><div class="operatorRow" style="display: none;"><div style="margin-right: .1em; visibility: hidden;">1.</div><div style="width: 3em; margin-right: .3em;"></div><input style="margin: 0; width: 4em;" type="range" min="0" max="15" value="0" step="1" title="Feedback Amplitude"><div class="selectContainer" style="width: 5em; margin-left: .3em;"><select style="width: 100%;" title="Feedback Envelope"><option value="0">custom</option><option value="1">steady</option><option value="2">punch</option><option value="3">flare 1</option><option value="4">flare 2</option><option value="5">flare 3</option><option value="6">twang 1</option><option value="7">twang 2</option><option value="8">twang 3</option><option value="9">swell 1</option><option value="10">swell 2</option><option value="11">swell 3</option><option value="12">tremolo1</option><option value="13">tremolo2</option><option value="14">tremolo3</option><option value="15">tremolo4</option><option value="16">tremolo5</option><option value="17">tremolo6</option><option value="18">decay 1</option><option value="19">decay 2</option><option value="20">decay 3</option></select></div></div><div class="selectRow" style="display: none;"><span class="tip">Spectrum:</span><div class="spectrum" style="height: 2em;"><svg style="background-color: #000000; touch-action: none; cursor: crosshair;" width="100%" height="100%" viewBox="0 0 112 26" preserveAspectRatio="none"><path fill="#444444" pointer-events="none" d="M 0 26 L 3.5 22.43 L 7 22.43 L 10.5 22.43 L 14 18.86 L 17.5 18.86 L 21 18.86 L 24.5 18.86 L 28 18.86 L 31.5 15.29 L 35 18.86 L 38.5 18.86 L 42 15.29 L 45.5 15.29 L 49 15.29 L 52.5 18.86 L 56 18.86 L 59.5 8.14 L 63 15.29 L 66.5 4.57 L 70 4.57 L 73.5 11.71 L 77 1 L 80.5 4.57 L 84 4.57 L 87.5 4.57 L 91 4.57 L 94.5 8.14 L 98 4.57 L 101.5 8.14 L 105 11.71 L 111 11.71 L 112 11.71 L 112 26 L 0 26 z "></path><svg pointer-events="none"><rect fill="#886644" x="2.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="27" y="0" width="2" height="26"></rect><rect fill="#886644" x="51.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="76" y="0" width="2" height="26"></rect><rect fill="#886644" x="100.5" y="0" width="2" height="26"></rect></svg><svg pointer-events="none" style="display: none;"><rect fill="#446688" x="16.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="41" y="0" width="2" height="26"></rect><rect fill="#446688" x="65.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="90" y="0" width="2" height="26"></rect></svg><path fill="none" stroke="currentColor" stroke-width="2" pointer-events="none" d="M 0 26 L 3.5 22.43 L 7 22.43 L 10.5 22.43 L 14 18.86 L 17.5 18.86 L 21 18.86 L 24.5 18.86 L 28 18.86 L 31.5 15.29 L 35 18.86 L 38.5 18.86 L 42 15.29 L 45.5 15.29 L 49 15.29 L 52.5 18.86 L 56 18.86 L 59.5 8.14 L 63 15.29 L 66.5 4.57 L 70 4.57 L 73.5 11.71 L 77 1 L 80.5 4.57 L 84 4.57 L 87.5 4.57 L 91 4.57 L 94.5 8.14 L 98 4.57 L 101.5 8.14 L 105 11.71 L 111 11.71 "></path><path fill="currentColor" pointer-events="none" d="M 112 11.71 L 108 7.71 L 108 15.71 z" style=""></path></svg></div></div><div class="selectRow" style="display: none;"><span class="tip">Harmonics:</span><div class="harmonics" style="height: 2em;"><svg style="background-color: #000000; touch-action: none; cursor: crosshair;" width="100%" height="100%" viewBox="0 0 112 26" preserveAspectRatio="none"><svg pointer-events="none"><rect fill="#886644" x="0.9259259259259258" y="0" width="2" height="26"></rect><rect fill="#886644" x="4.777777777777778" y="0" width="2" height="26"></rect><rect fill="#886644" x="12.481481481481481" y="0" width="2" height="26"></rect><rect fill="#886644" x="27.88888888888889" y="0" width="2" height="26"></rect><rect fill="#886644" x="58.7037037037037" y="0" width="2" height="26"></rect></svg><svg pointer-events="none"><rect fill="#446688" x="8.62962962962963" y="0" width="2" height="26"></rect><rect fill="#446688" x="20.185185185185187" y="0" width="2" height="26"></rect><rect fill="#446688" x="43.2962962962963" y="0" width="2" height="26"></rect><rect fill="#446688" x="89.51851851851852" y="0" width="2" height="26"></rect></svg><path fill="none" stroke="currentColor" stroke-width="2" pointer-events="none"></path><svg pointer-events="none"><rect fill="currentColor" x="111" y="0" width="1" height="26"></rect><rect fill="currentColor" x="109" y="0" width="1" height="26"></rect><rect fill="currentColor" x="107" y="0" width="1" height="26"></rect><rect fill="currentColor" x="105" y="0" width="1" height="26"></rect></svg></svg></div></div><div class="editor-controls" style="display: none;"><div class="selectRow"><span class="tip">Envelope:</span><span class="tip">Spectrum:</span></div><div class="selectRow"><div class="selectContainer" style="width: 5em; margin-right: .3em;"><select style="width: 100%;" title="Filter Envelope"><option value="0">custom</option><option value="1">steady</option><option value="2">punch</option><option value="3">flare 1</option><option value="4">flare 2</option><option value="5">flare 3</option><option value="6">twang 1</option><option value="7">twang 2</option><option value="8">twang 3</option><option value="9">swell 1</option><option value="10">swell 2</option><option value="11">swell 3</option><option value="12">tremolo1</option><option value="13">tremolo2</option><option value="14">tremolo3</option><option value="15">tremolo4</option><option value="16">tremolo5</option><option value="17">tremolo6</option><option value="18">decay 1</option><option value="19">decay 2</option><option value="20">decay 3</option></select></div><div class="spectrum" style="height: 2em;"><svg style="background-color: #000000; touch-action: none; cursor: crosshair;" width="100%" height="100%" viewBox="0 0 112 26" preserveAspectRatio="none"><path fill="#444444" pointer-events="none" d="M 0 26 L 3.5 22.43 L 7 22.43 L 10.5 22.43 L 14 22.43 L 17.5 18.86 L 21 22.43 L 24.5 22.43 L 28 18.86 L 31.5 22.43 L 35 15.29 L 38.5 22.43 L 42 15.29 L 45.5 11.71 L 49 4.57 L 52.5 11.71 L 56 11.71 L 59.5 1 L 63 11.71 L 66.5 15.29 L 70 15.29 L 73.5 11.71 L 77 1 L 80.5 11.71 L 84 15.29 L 87.5 18.86 L 91 22.43 L 94.5 26 M 98 26 M 101.5 26 M 105 26 L 112 26 L 112 26 L 0 26 z "></path><svg pointer-events="none"><rect fill="#886644" x="2.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="27" y="0" width="2" height="26"></rect><rect fill="#886644" x="51.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="76" y="0" width="2" height="26"></rect><rect fill="#886644" x="100.5" y="0" width="2" height="26"></rect></svg><svg pointer-events="none" style="display: none;"><rect fill="#446688" x="16.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="41" y="0" width="2" height="26"></rect><rect fill="#446688" x="65.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="90" y="0" width="2" height="26"></rect></svg><path fill="none" stroke="currentColor" stroke-width="2" pointer-events="none" d="M 0 26 L 3.5 22.43 L 7 22.43 L 10.5 22.43 L 14 22.43 L 17.5 18.86 L 21 22.43 L 24.5 22.43 L 28 18.86 L 31.5 22.43 L 35 15.29 L 38.5 22.43 L 42 15.29 L 45.5 11.71 L 49 4.57 L 52.5 11.71 L 56 11.71 L 59.5 1 L 63 11.71 L 66.5 15.29 L 70 15.29 L 73.5 11.71 L 77 1 L 80.5 11.71 L 84 15.29 L 87.5 18.86 L 91 22.43 L 94.5 26 M 98 26 M 101.5 26 M 105 26 "></path><path fill="currentColor" pointer-events="none" d="M 112 26 L 108 22 L 108 30 z" style="display: none;"></path></svg></div></div><div class="selectRow"><div class="selectContainer" style="width: 5em; margin-right: .3em;"><select style="width: 100%;" title="Filter Envelope"><option value="0">custom</option><option value="1">steady</option><option value="2">punch</option><option value="3">flare 1</option><option value="4">flare 2</option><option value="5">flare 3</option><option value="6">twang 1</option><option value="7">twang 2</option><option value="8">twang 3</option><option value="9">swell 1</option><option value="10">swell 2</option><option value="11">swell 3</option><option value="12">tremolo1</option><option value="13">tremolo2</option><option value="14">tremolo3</option><option value="15">tremolo4</option><option value="16">tremolo5</option><option value="17">tremolo6</option><option value="18">decay 1</option><option value="19">decay 2</option><option value="20">decay 3</option></select></div><div class="spectrum" style="height: 2em;"><svg style="background-color: #000000; touch-action: none; cursor: crosshair;" width="100%" height="100%" viewBox="0 0 112 26" preserveAspectRatio="none"><path fill="#444444" pointer-events="none" d="M 0 26 M 3.5 26 M 7 26 L 10.5 22.43 L 14 22.43 L 17.5 22.43 L 21 22.43 L 24.5 18.86 L 28 18.86 L 31.5 18.86 L 35 15.29 L 38.5 15.29 L 42 15.29 L 45.5 11.71 L 49 11.71 L 52.5 8.14 L 56 8.14 L 59.5 4.57 L 63 4.57 L 66.5 1 L 70 1 L 73.5 1 L 77 1 L 80.5 1 L 84 1 L 87.5 1 L 91 1 L 94.5 4.57 L 98 11.71 L 101.5 18.86 L 105 26 L 112 26 L 112 26 L 0 26 z "></path><svg pointer-events="none"><rect fill="#886644" x="2.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="27" y="0" width="2" height="26"></rect><rect fill="#886644" x="51.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="76" y="0" width="2" height="26"></rect><rect fill="#886644" x="100.5" y="0" width="2" height="26"></rect></svg><svg pointer-events="none" style="display: none;"><rect fill="#446688" x="16.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="41" y="0" width="2" height="26"></rect><rect fill="#446688" x="65.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="90" y="0" width="2" height="26"></rect></svg><path fill="none" stroke="currentColor" stroke-width="2" pointer-events="none" d="M 0 26 M 3.5 26 M 7 26 L 10.5 22.43 L 14 22.43 L 17.5 22.43 L 21 22.43 L 24.5 18.86 L 28 18.86 L 31.5 18.86 L 35 15.29 L 38.5 15.29 L 42 15.29 L 45.5 11.71 L 49 11.71 L 52.5 8.14 L 56 8.14 L 59.5 4.57 L 63 4.57 L 66.5 1 L 70 1 L 73.5 1 L 77 1 L 80.5 1 L 84 1 L 87.5 1 L 91 1 L 94.5 4.57 L 98 11.71 L 101.5 18.86 L 105 26 "></path><path fill="currentColor" pointer-events="none" d="M 112 26 L 108 22 L 108 30 z" style="display: none;"></path></svg></div></div><div class="selectRow"><div class="selectContainer" style="width: 5em; margin-right: .3em;"><select style="width: 100%;" title="Filter Envelope"><option value="0">custom</option><option value="1">steady</option><option value="2">punch</option><option value="3">flare 1</option><option value="4">flare 2</option><option value="5">flare 3</option><option value="6">twang 1</option><option value="7">twang 2</option><option value="8">twang 3</option><option value="9">swell 1</option><option value="10">swell 2</option><option value="11">swell 3</option><option value="12">tremolo1</option><option value="13">tremolo2</option><option value="14">tremolo3</option><option value="15">tremolo4</option><option value="16">tremolo5</option><option value="17">tremolo6</option><option value="18">decay 1</option><option value="19">decay 2</option><option value="20">decay 3</option></select></div><div class="spectrum" style="height: 2em;"><svg style="background-color: #000000; touch-action: none; cursor: crosshair;" width="100%" height="100%" viewBox="0 0 112 26" preserveAspectRatio="none"><path fill="#444444" pointer-events="none" d="M 0 26 L 3.5 11.71 L 7 11.71 L 10.5 11.71 L 14 15.29 L 17.5 11.71 L 21 11.71 L 24.5 15.29 L 28 15.29 L 31.5 11.71 L 35 15.29 L 38.5 15.29 L 42 15.29 L 45.5 8.14 L 49 11.71 L 52.5 15.29 L 56 11.71 L 59.5 4.57 L 63 8.14 L 66.5 11.71 L 70 4.57 L 73.5 8.14 L 77 11.71 L 80.5 4.57 L 84 1 L 87.5 8.14 L 91 4.57 L 94.5 4.57 L 98 4.57 L 101.5 4.57 L 105 4.57 L 111 4.57 L 112 4.57 L 112 26 L 0 26 z "></path><svg pointer-events="none"><rect fill="#886644" x="2.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="27" y="0" width="2" height="26"></rect><rect fill="#886644" x="51.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="76" y="0" width="2" height="26"></rect><rect fill="#886644" x="100.5" y="0" width="2" height="26"></rect></svg><svg pointer-events="none" style="display: none;"><rect fill="#446688" x="16.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="41" y="0" width="2" height="26"></rect><rect fill="#446688" x="65.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="90" y="0" width="2" height="26"></rect></svg><path fill="none" stroke="currentColor" stroke-width="2" pointer-events="none" d="M 0 26 L 3.5 11.71 L 7 11.71 L 10.5 11.71 L 14 15.29 L 17.5 11.71 L 21 11.71 L 24.5 15.29 L 28 15.29 L 31.5 11.71 L 35 15.29 L 38.5 15.29 L 42 15.29 L 45.5 8.14 L 49 11.71 L 52.5 15.29 L 56 11.71 L 59.5 4.57 L 63 8.14 L 66.5 11.71 L 70 4.57 L 73.5 8.14 L 77 11.71 L 80.5 4.57 L 84 1 L 87.5 8.14 L 91 4.57 L 94.5 4.57 L 98 4.57 L 101.5 4.57 L 105 4.57 L 111 4.57 "></path><path fill="currentColor" pointer-events="none" d="M 112 4.57 L 108 0.57 L 108 8.57 z"></path></svg></div></div><div class="selectRow"><div class="selectContainer" style="width: 5em; margin-right: .3em;"><select style="width: 100%;" title="Filter Envelope"><option value="0">custom</option><option value="1">steady</option><option value="2">punch</option><option value="3">flare 1</option><option value="4">flare 2</option><option value="5">flare 3</option><option value="6">twang 1</option><option value="7">twang 2</option><option value="8">twang 3</option><option value="9">swell 1</option><option value="10">swell 2</option><option value="11">swell 3</option><option value="12">tremolo1</option><option value="13">tremolo2</option><option value="14">tremolo3</option><option value="15">tremolo4</option><option value="16">tremolo5</option><option value="17">tremolo6</option><option value="18">decay 1</option><option value="19">decay 2</option><option value="20">decay 3</option></select></div><div class="spectrum" style="height: 2em;"><svg style="background-color: #000000; touch-action: none; cursor: crosshair;" width="100%" height="100%" viewBox="0 0 112 26" preserveAspectRatio="none"><path fill="#444444" pointer-events="none" d="M 0 26 L 3.5 15.29 L 7 18.86 L 10.5 18.86 L 14 15.29 L 17.5 18.86 L 21 18.86 L 24.5 18.86 L 28 11.71 L 31.5 18.86 L 35 18.86 L 38.5 18.86 L 42 11.71 L 45.5 15.29 L 49 15.29 L 52.5 18.86 L 56 18.86 L 59.5 11.71 L 63 15.29 L 66.5 15.29 L 70 15.29 L 73.5 8.14 L 77 15.29 L 80.5 15.29 L 84 8.14 L 87.5 11.71 L 91 8.14 L 94.5 8.14 L 98 8.14 L 101.5 8.14 L 105 8.14 L 111 8.14 L 112 8.14 L 112 26 L 0 26 z "></path><svg pointer-events="none"><rect fill="#886644" x="2.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="27" y="0" width="2" height="26"></rect><rect fill="#886644" x="51.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="76" y="0" width="2" height="26"></rect><rect fill="#886644" x="100.5" y="0" width="2" height="26"></rect></svg><svg pointer-events="none" style="display: none;"><rect fill="#446688" x="16.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="41" y="0" width="2" height="26"></rect><rect fill="#446688" x="65.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="90" y="0" width="2" height="26"></rect></svg><path fill="none" stroke="currentColor" stroke-width="2" pointer-events="none" d="M 0 26 L 3.5 15.29 L 7 18.86 L 10.5 18.86 L 14 15.29 L 17.5 18.86 L 21 18.86 L 24.5 18.86 L 28 11.71 L 31.5 18.86 L 35 18.86 L 38.5 18.86 L 42 11.71 L 45.5 15.29 L 49 15.29 L 52.5 18.86 L 56 18.86 L 59.5 11.71 L 63 15.29 L 66.5 15.29 L 70 15.29 L 73.5 8.14 L 77 15.29 L 80.5 15.29 L 84 8.14 L 87.5 11.71 L 91 8.14 L 94.5 8.14 L 98 8.14 L 101.5 8.14 L 105 8.14 L 111 8.14 "></path><path fill="currentColor" pointer-events="none" d="M 112 8.14 L 108 4.14 L 108 12.14 z"></path></svg></div></div><div class="selectRow"><div class="selectContainer" style="width: 5em; margin-right: .3em;"><select style="width: 100%;" title="Filter Envelope"><option value="0">custom</option><option value="1">steady</option><option value="2">punch</option><option value="3">flare 1</option><option value="4">flare 2</option><option value="5">flare 3</option><option value="6">twang 1</option><option value="7">twang 2</option><option value="8">twang 3</option><option value="9">swell 1</option><option value="10">swell 2</option><option value="11">swell 3</option><option value="12">tremolo1</option><option value="13">tremolo2</option><option value="14">tremolo3</option><option value="15">tremolo4</option><option value="16">tremolo5</option><option value="17">tremolo6</option><option value="18">decay 1</option><option value="19">decay 2</option><option value="20">decay 3</option></select></div><div class="spectrum" style="height: 2em;"><svg style="background-color: #000000; touch-action: none; cursor: crosshair;" width="100%" height="100%" viewBox="0 0 112 26" preserveAspectRatio="none"><path fill="#444444" pointer-events="none" d="M 0 26 L 3.5 18.86 L 7 15.29 L 10.5 15.29 L 14 15.29 L 17.5 15.29 L 21 18.86 L 24.5 18.86 L 28 15.29 L 31.5 18.86 L 35 18.86 L 38.5 15.29 L 42 18.86 L 45.5 22.43 L 49 18.86 L 52.5 15.29 L 56 18.86 L 59.5 15.29 L 63 18.86 L 66.5 11.71 L 70 18.86 L 73.5 15.29 L 77 11.71 L 80.5 15.29 L 84 8.14 L 87.5 15.29 L 91 8.14 L 94.5 11.71 L 98 11.71 L 101.5 8.14 L 105 8.14 L 111 8.14 L 112 8.14 L 112 26 L 0 26 z "></path><svg pointer-events="none"><rect fill="#886644" x="2.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="27" y="0" width="2" height="26"></rect><rect fill="#886644" x="51.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="76" y="0" width="2" height="26"></rect><rect fill="#886644" x="100.5" y="0" width="2" height="26"></rect></svg><svg pointer-events="none" style="display: none;"><rect fill="#446688" x="16.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="41" y="0" width="2" height="26"></rect><rect fill="#446688" x="65.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="90" y="0" width="2" height="26"></rect></svg><path fill="none" stroke="currentColor" stroke-width="2" pointer-events="none" d="M 0 26 L 3.5 18.86 L 7 15.29 L 10.5 15.29 L 14 15.29 L 17.5 15.29 L 21 18.86 L 24.5 18.86 L 28 15.29 L 31.5 18.86 L 35 18.86 L 38.5 15.29 L 42 18.86 L 45.5 22.43 L 49 18.86 L 52.5 15.29 L 56 18.86 L 59.5 15.29 L 63 18.86 L 66.5 11.71 L 70 18.86 L 73.5 15.29 L 77 11.71 L 80.5 15.29 L 84 8.14 L 87.5 15.29 L 91 8.14 L 94.5 11.71 L 98 11.71 L 101.5 8.14 L 105 8.14 L 111 8.14 "></path><path fill="currentColor" pointer-events="none" d="M 112 8.14 L 108 4.14 L 108 12.14 z"></path></svg></div></div><div class="selectRow"><div class="selectContainer" style="width: 5em; margin-right: .3em;"><select style="width: 100%;" title="Filter Envelope"><option value="0">custom</option><option value="1">steady</option><option value="2">punch</option><option value="3">flare 1</option><option value="4">flare 2</option><option value="5">flare 3</option><option value="6">twang 1</option><option value="7">twang 2</option><option value="8">twang 3</option><option value="9">swell 1</option><option value="10">swell 2</option><option value="11">swell 3</option><option value="12">tremolo1</option><option value="13">tremolo2</option><option value="14">tremolo3</option><option value="15">tremolo4</option><option value="16">tremolo5</option><option value="17">tremolo6</option><option value="18">decay 1</option><option value="19">decay 2</option><option value="20">decay 3</option></select></div><div class="spectrum" style="height: 2em;"><svg style="background-color: #000000; touch-action: none; cursor: crosshair;" width="100%" height="100%" viewBox="0 0 112 26" preserveAspectRatio="none"><path fill="#444444" pointer-events="none" d="M 0 26 L 3.5 15.29 L 7 15.29 L 10.5 15.29 L 14 8.14 L 17.5 18.86 L 21 18.86 L 24.5 15.29 L 28 15.29 L 31.5 15.29 L 35 18.86 L 38.5 15.29 L 42 15.29 L 45.5 15.29 L 49 18.86 L 52.5 18.86 L 56 15.29 L 59.5 15.29 L 63 18.86 L 66.5 18.86 L 70 18.86 L 73.5 11.71 L 77 22.43 L 80.5 11.71 L 84 15.29 L 87.5 15.29 L 91 11.71 L 94.5 15.29 L 98 15.29 L 101.5 11.71 L 105 11.71 L 111 11.71 L 112 11.71 L 112 26 L 0 26 z "></path><svg pointer-events="none"><rect fill="#886644" x="2.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="27" y="0" width="2" height="26"></rect><rect fill="#886644" x="51.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="76" y="0" width="2" height="26"></rect><rect fill="#886644" x="100.5" y="0" width="2" height="26"></rect></svg><svg pointer-events="none" style="display: none;"><rect fill="#446688" x="16.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="41" y="0" width="2" height="26"></rect><rect fill="#446688" x="65.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="90" y="0" width="2" height="26"></rect></svg><path fill="none" stroke="currentColor" stroke-width="2" pointer-events="none" d="M 0 26 L 3.5 15.29 L 7 15.29 L 10.5 15.29 L 14 8.14 L 17.5 18.86 L 21 18.86 L 24.5 15.29 L 28 15.29 L 31.5 15.29 L 35 18.86 L 38.5 15.29 L 42 15.29 L 45.5 15.29 L 49 18.86 L 52.5 18.86 L 56 15.29 L 59.5 15.29 L 63 18.86 L 66.5 18.86 L 70 18.86 L 73.5 11.71 L 77 22.43 L 80.5 11.71 L 84 15.29 L 87.5 15.29 L 91 11.71 L 94.5 15.29 L 98 15.29 L 101.5 11.71 L 105 11.71 L 111 11.71 "></path><path fill="currentColor" pointer-events="none" d="M 112 11.71 L 108 7.71 L 108 15.71 z"></path></svg></div></div><div class="selectRow"><div class="selectContainer" style="width: 5em; margin-right: .3em;"><select style="width: 100%;" title="Filter Envelope"><option value="0">custom</option><option value="1">steady</option><option value="2">punch</option><option value="3">flare 1</option><option value="4">flare 2</option><option value="5">flare 3</option><option value="6">twang 1</option><option value="7">twang 2</option><option value="8">twang 3</option><option value="9">swell 1</option><option value="10">swell 2</option><option value="11">swell 3</option><option value="12">tremolo1</option><option value="13">tremolo2</option><option value="14">tremolo3</option><option value="15">tremolo4</option><option value="16">tremolo5</option><option value="17">tremolo6</option><option value="18">decay 1</option><option value="19">decay 2</option><option value="20">decay 3</option></select></div><div class="spectrum" style="height: 2em;"><svg style="background-color: #000000; touch-action: none; cursor: crosshair;" width="100%" height="100%" viewBox="0 0 112 26" preserveAspectRatio="none"><path fill="#444444" pointer-events="none" d="M 0 26 M 3.5 26 M 7 26 L 10.5 22.43 L 14 22.43 L 17.5 22.43 L 21 22.43 L 24.5 18.86 L 28 18.86 L 31.5 18.86 L 35 15.29 L 38.5 15.29 L 42 15.29 L 45.5 11.71 L 49 11.71 L 52.5 11.71 L 56 8.14 L 59.5 8.14 L 63 8.14 L 66.5 8.14 L 70 8.14 L 73.5 8.14 L 77 8.14 L 80.5 8.14 L 84 11.71 L 87.5 11.71 L 91 11.71 L 94.5 11.71 L 98 15.29 L 101.5 15.29 L 105 15.29 L 111 15.29 L 112 15.29 L 112 26 L 0 26 z "></path><svg pointer-events="none"><rect fill="#886644" x="2.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="27" y="0" width="2" height="26"></rect><rect fill="#886644" x="51.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="76" y="0" width="2" height="26"></rect><rect fill="#886644" x="100.5" y="0" width="2" height="26"></rect></svg><svg pointer-events="none" style="display: none;"><rect fill="#446688" x="16.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="41" y="0" width="2" height="26"></rect><rect fill="#446688" x="65.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="90" y="0" width="2" height="26"></rect></svg><path fill="none" stroke="currentColor" stroke-width="2" pointer-events="none" d="M 0 26 M 3.5 26 M 7 26 L 10.5 22.43 L 14 22.43 L 17.5 22.43 L 21 22.43 L 24.5 18.86 L 28 18.86 L 31.5 18.86 L 35 15.29 L 38.5 15.29 L 42 15.29 L 45.5 11.71 L 49 11.71 L 52.5 11.71 L 56 8.14 L 59.5 8.14 L 63 8.14 L 66.5 8.14 L 70 8.14 L 73.5 8.14 L 77 8.14 L 80.5 8.14 L 84 11.71 L 87.5 11.71 L 91 11.71 L 94.5 11.71 L 98 15.29 L 101.5 15.29 L 105 15.29 L 111 15.29 "></path><path fill="currentColor" pointer-events="none" d="M 112 15.29 L 108 11.29 L 108 19.29 z"></path></svg></div></div><div class="selectRow"><div class="selectContainer" style="width: 5em; margin-right: .3em;"><select style="width: 100%;" title="Filter Envelope"><option value="0">custom</option><option value="1">steady</option><option value="2">punch</option><option value="3">flare 1</option><option value="4">flare 2</option><option value="5">flare 3</option><option value="6">twang 1</option><option value="7">twang 2</option><option value="8">twang 3</option><option value="9">swell 1</option><option value="10">swell 2</option><option value="11">swell 3</option><option value="12">tremolo1</option><option value="13">tremolo2</option><option value="14">tremolo3</option><option value="15">tremolo4</option><option value="16">tremolo5</option><option value="17">tremolo6</option><option value="18">decay 1</option><option value="19">decay 2</option><option value="20">decay 3</option></select></div><div class="spectrum" style="height: 2em;"><svg style="background-color: #000000; touch-action: none; cursor: crosshair;" width="100%" height="100%" viewBox="0 0 112 26" preserveAspectRatio="none"><path fill="#444444" pointer-events="none" d="M 0 26 M 3.5 26 L 7 22.43 L 10.5 18.86 L 14 15.29 L 17.5 4.57 L 21 8.14 L 24.5 18.86 L 28 15.29 L 31.5 15.29 L 35 15.29 L 38.5 15.29 L 42 18.86 L 45.5 8.14 L 49 18.86 L 52.5 8.14 L 56 18.86 L 59.5 15.29 L 63 15.29 L 66.5 15.29 L 70 15.29 L 73.5 11.71 L 77 15.29 L 80.5 15.29 L 84 11.71 L 87.5 15.29 L 91 15.29 L 94.5 15.29 L 98 11.71 L 101.5 11.71 L 105 11.71 L 111 11.71 L 112 11.71 L 112 26 L 0 26 z "></path><svg pointer-events="none"><rect fill="#886644" x="2.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="27" y="0" width="2" height="26"></rect><rect fill="#886644" x="51.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="76" y="0" width="2" height="26"></rect><rect fill="#886644" x="100.5" y="0" width="2" height="26"></rect></svg><svg pointer-events="none" style="display: none;"><rect fill="#446688" x="16.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="41" y="0" width="2" height="26"></rect><rect fill="#446688" x="65.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="90" y="0" width="2" height="26"></rect></svg><path fill="none" stroke="currentColor" stroke-width="2" pointer-events="none" d="M 0 26 M 3.5 26 L 7 22.43 L 10.5 18.86 L 14 15.29 L 17.5 4.57 L 21 8.14 L 24.5 18.86 L 28 15.29 L 31.5 15.29 L 35 15.29 L 38.5 15.29 L 42 18.86 L 45.5 8.14 L 49 18.86 L 52.5 8.14 L 56 18.86 L 59.5 15.29 L 63 15.29 L 66.5 15.29 L 70 15.29 L 73.5 11.71 L 77 15.29 L 80.5 15.29 L 84 11.71 L 87.5 15.29 L 91 15.29 L 94.5 15.29 L 98 11.71 L 101.5 11.71 L 105 11.71 L 111 11.71 "></path><path fill="currentColor" pointer-events="none" d="M 112 11.71 L 108 7.71 L 108 15.71 z"></path></svg></div></div><div class="selectRow"><div class="selectContainer" style="width: 5em; margin-right: .3em;"><select style="width: 100%;" title="Filter Envelope"><option value="0">custom</option><option value="1">steady</option><option value="2">punch</option><option value="3">flare 1</option><option value="4">flare 2</option><option value="5">flare 3</option><option value="6">twang 1</option><option value="7">twang 2</option><option value="8">twang 3</option><option value="9">swell 1</option><option value="10">swell 2</option><option value="11">swell 3</option><option value="12">tremolo1</option><option value="13">tremolo2</option><option value="14">tremolo3</option><option value="15">tremolo4</option><option value="16">tremolo5</option><option value="17">tremolo6</option><option value="18">decay 1</option><option value="19">decay 2</option><option value="20">decay 3</option></select></div><div class="spectrum" style="height: 2em;"><svg style="background-color: #000000; touch-action: none; cursor: crosshair;" width="100%" height="100%" viewBox="0 0 112 26" preserveAspectRatio="none"><path fill="#444444" pointer-events="none" d="M 0 26 M 3.5 26 M 7 26 M 10.5 26 M 14 26 M 17.5 26 L 21 8.14 L 24.5 11.71 L 28 15.29 L 31.5 15.29 L 35 15.29 L 38.5 11.71 L 42 11.71 L 45.5 15.29 L 49 18.86 L 52.5 11.71 L 56 15.29 L 59.5 15.29 L 63 15.29 L 66.5 18.86 L 70 15.29 L 73.5 11.71 L 77 15.29 L 80.5 15.29 L 84 15.29 L 87.5 15.29 L 91 15.29 L 94.5 15.29 L 98 18.86 L 101.5 15.29 L 105 15.29 L 111 15.29 L 112 15.29 L 112 26 L 0 26 z "></path><svg pointer-events="none"><rect fill="#886644" x="2.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="27" y="0" width="2" height="26"></rect><rect fill="#886644" x="51.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="76" y="0" width="2" height="26"></rect><rect fill="#886644" x="100.5" y="0" width="2" height="26"></rect></svg><svg pointer-events="none" style="display: none;"><rect fill="#446688" x="16.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="41" y="0" width="2" height="26"></rect><rect fill="#446688" x="65.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="90" y="0" width="2" height="26"></rect></svg><path fill="none" stroke="currentColor" stroke-width="2" pointer-events="none" d="M 0 26 M 3.5 26 M 7 26 M 10.5 26 M 14 26 M 17.5 26 L 21 8.14 L 24.5 11.71 L 28 15.29 L 31.5 15.29 L 35 15.29 L 38.5 11.71 L 42 11.71 L 45.5 15.29 L 49 18.86 L 52.5 11.71 L 56 15.29 L 59.5 15.29 L 63 15.29 L 66.5 18.86 L 70 15.29 L 73.5 11.71 L 77 15.29 L 80.5 15.29 L 84 15.29 L 87.5 15.29 L 91 15.29 L 94.5 15.29 L 98 18.86 L 101.5 15.29 L 105 15.29 L 111 15.29 "></path><path fill="currentColor" pointer-events="none" d="M 112 15.29 L 108 11.29 L 108 19.29 z"></path></svg></div></div><div class="selectRow"><div class="selectContainer" style="width: 5em; margin-right: .3em;"><select style="width: 100%;" title="Filter Envelope"><option value="0">custom</option><option value="1">steady</option><option value="2">punch</option><option value="3">flare 1</option><option value="4">flare 2</option><option value="5">flare 3</option><option value="6">twang 1</option><option value="7">twang 2</option><option value="8">twang 3</option><option value="9">swell 1</option><option value="10">swell 2</option><option value="11">swell 3</option><option value="12">tremolo1</option><option value="13">tremolo2</option><option value="14">tremolo3</option><option value="15">tremolo4</option><option value="16">tremolo5</option><option value="17">tremolo6</option><option value="18">decay 1</option><option value="19">decay 2</option><option value="20">decay 3</option></select></div><div class="spectrum" style="height: 2em;"><svg style="background-color: #000000; touch-action: none; cursor: crosshair;" width="100%" height="100%" viewBox="0 0 112 26" preserveAspectRatio="none"><path fill="#444444" pointer-events="none" d="M 0 26 M 3.5 26 M 7 26 M 10.5 26 M 14 26 L 17.5 1 L 21 11.71 L 24.5 15.29 L 28 15.29 L 31.5 18.86 L 35 11.71 L 38.5 15.29 L 42 18.86 L 45.5 8.14 L 49 15.29 L 52.5 15.29 L 56 15.29 L 59.5 15.29 L 63 11.71 L 66.5 15.29 L 70 15.29 L 73.5 15.29 L 77 15.29 L 80.5 15.29 L 84 15.29 L 87.5 15.29 L 91 15.29 L 94.5 18.86 L 98 15.29 L 101.5 15.29 L 105 15.29 L 111 15.29 L 112 15.29 L 112 26 L 0 26 z "></path><svg pointer-events="none"><rect fill="#886644" x="2.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="27" y="0" width="2" height="26"></rect><rect fill="#886644" x="51.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="76" y="0" width="2" height="26"></rect><rect fill="#886644" x="100.5" y="0" width="2" height="26"></rect></svg><svg pointer-events="none" style="display: none;"><rect fill="#446688" x="16.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="41" y="0" width="2" height="26"></rect><rect fill="#446688" x="65.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="90" y="0" width="2" height="26"></rect></svg><path fill="none" stroke="currentColor" stroke-width="2" pointer-events="none" d="M 0 26 M 3.5 26 M 7 26 M 10.5 26 M 14 26 L 17.5 1 L 21 11.71 L 24.5 15.29 L 28 15.29 L 31.5 18.86 L 35 11.71 L 38.5 15.29 L 42 18.86 L 45.5 8.14 L 49 15.29 L 52.5 15.29 L 56 15.29 L 59.5 15.29 L 63 11.71 L 66.5 15.29 L 70 15.29 L 73.5 15.29 L 77 15.29 L 80.5 15.29 L 84 15.29 L 87.5 15.29 L 91 15.29 L 94.5 18.86 L 98 15.29 L 101.5 15.29 L 105 15.29 L 111 15.29 "></path><path fill="currentColor" pointer-events="none" d="M 112 15.29 L 108 11.29 L 108 19.29 z"></path></svg></div></div><div class="selectRow"><div class="selectContainer" style="width: 5em; margin-right: .3em;"><select style="width: 100%;" title="Filter Envelope"><option value="0">custom</option><option value="1">steady</option><option value="2">punch</option><option value="3">flare 1</option><option value="4">flare 2</option><option value="5">flare 3</option><option value="6">twang 1</option><option value="7">twang 2</option><option value="8">twang 3</option><option value="9">swell 1</option><option value="10">swell 2</option><option value="11">swell 3</option><option value="12">tremolo1</option><option value="13">tremolo2</option><option value="14">tremolo3</option><option value="15">tremolo4</option><option value="16">tremolo5</option><option value="17">tremolo6</option><option value="18">decay 1</option><option value="19">decay 2</option><option value="20">decay 3</option></select></div><div class="spectrum" style="height: 2em;"><svg style="background-color: #000000; touch-action: none; cursor: crosshair;" width="100%" height="100%" viewBox="0 0 112 26" preserveAspectRatio="none"><path fill="#444444" pointer-events="none" d="M 0 26 M 3.5 26 M 7 26 M 10.5 26 L 14 1 L 17.5 8.14 L 21 8.14 L 24.5 11.71 L 28 4.57 L 31.5 11.71 L 35 11.71 L 38.5 11.71 L 42 8.14 L 45.5 15.29 L 49 15.29 L 52.5 11.71 L 56 15.29 L 59.5 15.29 L 63 15.29 L 66.5 15.29 L 70 15.29 L 73.5 15.29 L 77 15.29 L 80.5 15.29 L 84 15.29 L 87.5 15.29 L 91 15.29 L 94.5 15.29 L 98 15.29 L 101.5 15.29 L 105 15.29 L 111 15.29 L 112 15.29 L 112 26 L 0 26 z "></path><svg pointer-events="none"><rect fill="#886644" x="2.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="27" y="0" width="2" height="26"></rect><rect fill="#886644" x="51.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="76" y="0" width="2" height="26"></rect><rect fill="#886644" x="100.5" y="0" width="2" height="26"></rect></svg><svg pointer-events="none" style="display: none;"><rect fill="#446688" x="16.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="41" y="0" width="2" height="26"></rect><rect fill="#446688" x="65.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="90" y="0" width="2" height="26"></rect></svg><path fill="none" stroke="currentColor" stroke-width="2" pointer-events="none" d="M 0 26 M 3.5 26 M 7 26 M 10.5 26 L 14 1 L 17.5 8.14 L 21 8.14 L 24.5 11.71 L 28 4.57 L 31.5 11.71 L 35 11.71 L 38.5 11.71 L 42 8.14 L 45.5 15.29 L 49 15.29 L 52.5 11.71 L 56 15.29 L 59.5 15.29 L 63 15.29 L 66.5 15.29 L 70 15.29 L 73.5 15.29 L 77 15.29 L 80.5 15.29 L 84 15.29 L 87.5 15.29 L 91 15.29 L 94.5 15.29 L 98 15.29 L 101.5 15.29 L 105 15.29 L 111 15.29 "></path><path fill="currentColor" pointer-events="none" d="M 112 15.29 L 108 11.29 L 108 19.29 z"></path></svg></div></div><div class="selectRow"><div class="selectContainer" style="width: 5em; margin-right: .3em;"><select style="width: 100%;" title="Filter Envelope"><option value="0">custom</option><option value="1">steady</option><option value="2">punch</option><option value="3">flare 1</option><option value="4">flare 2</option><option value="5">flare 3</option><option value="6">twang 1</option><option value="7">twang 2</option><option value="8">twang 3</option><option value="9">swell 1</option><option value="10">swell 2</option><option value="11">swell 3</option><option value="12">tremolo1</option><option value="13">tremolo2</option><option value="14">tremolo3</option><option value="15">tremolo4</option><option value="16">tremolo5</option><option value="17">tremolo6</option><option value="18">decay 1</option><option value="19">decay 2</option><option value="20">decay 3</option></select></div><div class="spectrum" style="height: 2em;"><svg style="background-color: #000000; touch-action: none; cursor: crosshair;" width="100%" height="100%" viewBox="0 0 112 26" preserveAspectRatio="none"><path fill="#444444" pointer-events="none" d="M 0 26 L 3.5 11.71 L 7 8.14 L 10.5 8.14 L 14 4.57 L 17.5 4.57 L 21 4.57 L 24.5 8.14 L 28 8.14 L 31.5 8.14 L 35 8.14 L 38.5 11.71 L 42 11.71 L 45.5 11.71 L 49 11.71 L 52.5 15.29 L 56 15.29 L 59.5 15.29 L 63 15.29 L 66.5 18.86 L 70 18.86 L 73.5 18.86 L 77 18.86 L 80.5 18.86 L 84 18.86 L 87.5 18.86 L 91 18.86 L 94.5 18.86 L 98 18.86 L 101.5 18.86 L 105 18.86 L 111 18.86 L 112 18.86 L 112 26 L 0 26 z "></path><svg pointer-events="none"><rect fill="#886644" x="2.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="27" y="0" width="2" height="26"></rect><rect fill="#886644" x="51.5" y="0" width="2" height="26"></rect><rect fill="#886644" x="76" y="0" width="2" height="26"></rect><rect fill="#886644" x="100.5" y="0" width="2" height="26"></rect></svg><svg pointer-events="none" style="display: none;"><rect fill="#446688" x="16.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="41" y="0" width="2" height="26"></rect><rect fill="#446688" x="65.5" y="0" width="2" height="26"></rect><rect fill="#446688" x="90" y="0" width="2" height="26"></rect></svg><path fill="none" stroke="currentColor" stroke-width="2" pointer-events="none" d="M 0 26 L 3.5 11.71 L 7 8.14 L 10.5 8.14 L 14 4.57 L 17.5 4.57 L 21 4.57 L 24.5 8.14 L 28 8.14 L 31.5 8.14 L 35 8.14 L 38.5 11.71 L 42 11.71 L 45.5 11.71 L 49 11.71 L 52.5 15.29 L 56 15.29 L 59.5 15.29 L 63 15.29 L 66.5 18.86 L 70 18.86 L 73.5 18.86 L 77 18.86 L 80.5 18.86 L 84 18.86 L 87.5 18.86 L 91 18.86 L 94.5 18.86 L 98 18.86 L 101.5 18.86 L 105 18.86 L 111 18.86 "></path><path fill="currentColor" pointer-events="none" d="M 112 18.86 L 108 14.86 L 108 22.86 z"></path></svg></div></div></div><div class="selectRow" title="Pulse Width Modulator Envelope" style="display: none;"><span class="tip">Pulse Env:</span><div class="selectContainer"><select><option value="0">custom</option><option value="1">steady</option><option value="2">punch</option><option value="3">flare 1</option><option value="4">flare 2</option><option value="5">flare 3</option><option value="6">twang 1</option><option value="7">twang 2</option><option value="8">twang 3</option><option value="9">swell 1</option><option value="10">swell 2</option><option value="11">swell 3</option><option value="12">tremolo1</option><option value="13">tremolo2</option><option value="14">tremolo3</option><option value="15">tremolo4</option><option value="16">tremolo5</option><option value="17">tremolo6</option><option value="18">decay 1</option><option value="19">decay 2</option><option value="20">decay 3</option></select></div></div><div class="selectRow" style="display: none;"><span class="tip">Pulse Width:</span><input style="margin: 0;" type="range" min="0" max="7" value="0" step="1"></div></div></div></div></div></div></div><div class="promptContainer" style="display: none;"></div></div></div>
+	
+	<h1>
+		BeepBox
+	</h1>
+	<p id="introduction">
+		BeepBox is an online tool for sketching and sharing instrumental melodies. 
+	</p>
+	<p>
+		All song data is packaged into the URL at the top of your browser. 
+		When you make changes to the song, the URL is updated to reflect your changes. 
+		When you are satisfied with your song, just copy and paste the URL to save and share your song! 
+	</p>
+    <div class="donation">
+		BeepBox is a passion project, and will always be free to use. If you find it valuable and have the means, any gratuity via
+		<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+			<input type="hidden" name="cmd" value="_donations">
+			<input type="hidden" name="business" value="QZJTX9GRYEV9N">
+			<input type="hidden" name="currency_code" value="USD">
+			<input type="submit" name="submit" value="Paypal">
+		</form>
+		would be appreciated!
+    </div>
+	
+	<div class="column-container">
+		<div class="instructions-column">
+			<h1>
+				Instructions
+			</h1>
+			<p>
+				You can add or remove notes by clicking on the gray rows at the top. 
+				BeepBox automatically plays the notes out loud for you. Try it!
+			</p>
+			<p>
+				Notes go into patterns, and you can edit one pattern at a time.
+				Those numbered boxes at the bottom of the editor are the different patterns you can edit.
+				<span id="bar-editing">
+					Click the other boxes to move to a different part of the song, or click the arrows on the currently selected box to swap which pattern is played during that part of the song.
+				</span>
+			</p>
+			<p>
+				BeepBox can play several rows of patterns simultaneously, and each row has its own set of patterns. 
+				Most rows can play melodies or harmonies, but the bottom row is for drums.
+			</p>
+			<p>
+				The purple loop underneath the numbered boxes controls which part of the song is currently repeating. 
+				Move the loop to listen to a different part of the song, or drag the ends to expand the loop to include the whole song. 
+			</p>
+			<div id="keyboard-instructions">
+				<p>
+					When BeepBox has focus (click on its interface above), you can use these keyboard shortcuts: <br>
+				</p>
+				<ul>
+					<li>Spacebar: Pause or Resume</li>
+					<li>Z: Undo</li>
+					<li>Y or Shift Z: Redo</li>
+					<li>C: Copy the current pattern</li>
+					<li>V: Paste the current pattern</li>
+					<li>[ ]: Move the playhead backward and forward</li>
+					<li>Arrow Keys: Change which bar is selected</li>
+					<li>1-8: Reassign a pattern to the currently selected bar</li>
+					<li>- +: Shift the notes in the pattern up or down</li>
+				</ul>
+			</div>
+			<p>
+				In the note pattern editor, you can click and drag horizontally on a note to adjust its duration.
+				You can also click above or below an existing note to add more notes to be played simultaneously, which is called a chord. 
+			</p>
+			<p>
+				ADVANCED: Drag vertically from an existing note to bend its pitch, or drag vertically from above or below the note to adjust its volume.
+			</p>
+			<p>
+				BeepBox has many more features. 
+				Try playing with the buttons and menus on the right side to find out what it can do!
+			</p>
+			<p>
+				<a href="https://twitter.com/beepboxco">Check out some of these songs that other people have posted on Twitter!</a>
+				If you find something you like, you should let the creator know!
+				And if you see any beginners asking for advice, maybe you can help them!
+			</p>
+			<h1>
+				About
+			</h1>
+			<p>
+				BeepBox is developed by <a href="http://www.johnnesky.com/">John Nesky</a>, also known as <a href="https://twitter.com/shaktool">@shaktool</a>. 
+			</p>
+			<p>
+				BeepBox does not claim ownership over songs created with it, so original songs belong to their authors. 
+			</p>
+			<p>
+				Neither John Nesky nor BeepBox assume responsibility for any copyrighted material played on BeepBox. No songs are ever received, recorded, or distributed by BeepBox's servers. All song data is contained in the URL after the hash (#) mark, and BeepBox running inside your browser converts that data into sound waves.
+			</p>
+			<p>
+				You can download <a download="beepbox_offline.html" href="https://www.beepbox.co/beepbox_offline.html">an offline version of BeepBox</a> to use when you don't have access to the internet. The features are otherwise the same.
+			</p>
+			<p>
+				You can download and use <a href="https://bitbucket.org/shaktool/beepbox">the source code</a> under the MIT license. In particular, you can use the synth code <a href="https://www.beepbox.co/synth_example.html">as demonstrated here</a> to play BeepBox songs in your own JavaScript projects! 
+			</p>
+			<p>
+				Those who yearn for simpler times can find the old version of BeepBox <a href="https://www.beepbox.co/2_3/" target="_blank">here</a>.
+			</p>
+		</div>
+		<div class="twitter-column">
+			<h1>
+				Shared on Twitter:
+			</h1>
+			<iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true" class="twitter-timeline twitter-timeline-rendered" style="position: static; visibility: visible; display: inline-block; width: 300px; height: 2000px; padding: 0px; border: none; max-width: 100%; min-width: 180px; margin-top: 0px; margin-bottom: 0px; min-height: 200px;" data-widget-id="profile:beepboxco" title="Twitter Timeline" src="./MY BEEP BOX_files/saved_resource.html"></iframe>
+			<script async="" src="./MY BEEP BOX_files/widgets.js.download" charset="utf-8"></script>
+		</div>
+	</div>
+	
+	<!--
+	Instead of loading js beepbox editor interface directly, test for browser support.
+	<script type="text/javascript" src="beepbox_editor.min.js"></script>
+	-->
+	<script type="text/javascript">
+		
+		if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|android|ipad|playbook|silk/i.test(navigator.userAgent) ) {
+			document.getElementById("introduction").innerHTML = "BeepBox is an online tool for sketching and sharing chiptune melodies. Make sure that your volume is turned up, then press the play button!";
+			document.getElementById("keyboard-instructions").style.display = "none";
+			document.getElementById("bar-editing").innerHTML = "Tap the other boxes to move to a different part of the song, or tap on the currently selected box to swap which pattern is played during that part of the song.";
+		}
+		
+		function browserHasRequiredFeatures() {
+			"use strict";
+			if (window.AudioContext == undefined && window.webkitAudioContext == undefined) {
+				return false;
+			}
+			
+			try {
+				eval("class T {}");
+				eval("const a = () => 0");
+				eval("for (const a of []);");
+			} catch (error) {
+				return false;
+			}
+			
+			return true;
+		}
+		
+		if (browserHasRequiredFeatures()) {
+			// Go ahead and load js beepbox editor interface:
+			var fileref = document.createElement("script");
+			fileref.setAttribute("type", "text/javascript");
+			fileref.setAttribute("src", "beepbox_editor.min.js");
+			document.head.appendChild(fileref);
+		} else {
+			document.getElementById("beepboxEditorContainer").innerHTML = "Sorry, BeepBox doesn't support your browser. Try a recent version of Chrome, Firefox, Edge, Safari, or Opera.";
+		}
+		
+	</script>
+<iframe scrolling="no" frameborder="0" allowtransparency="true" src="./MY BEEP BOX_files/widget_iframe.0639d67d95b7680840758b6833f06d87.html" title="Twitter settings iframe" style="display: none;"></iframe><iframe id="rufous-sandbox" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true" style="position: absolute; visibility: hidden; display: none; width: 0px; height: 0px; padding: 0px; border: none;" title="Twitter analytics iframe" src="./MY BEEP BOX_files/saved_resource(1).html"></iframe></body></html>
